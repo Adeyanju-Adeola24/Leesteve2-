@@ -1,789 +1,748 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Steve lee — Python Developer, Automation Engineer & Cybersecurity Enthusiast based in Nigeria."/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Steve lee — Python Developer, Automation Engineer & Cybersecurity Enthusiast" />
 <title>Steve lee | Python Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-/* ════════════════════════════════════════════
-   ROOT & RESET
-════════════════════════════════════════════ */
-:root {
-  --bg0:     #03060d;
-  --bg1:     #070d1a;
-  --bg2:     #0c1528;
-  --bg3:     #111f36;
-  --g0:      #00ff88;
-  --g1:      #00cc6a;
-  --c0:      #00e5ff;
-  --c1:      #00b8cc;
-  --r0:      #ff3860;
-  --amber:   #ffb300;
-  --txt:     #b8cfe8;
-  --txt-dim: #4a6a8a;
-  --border:  rgba(0,229,255,.12);
-  --border2: rgba(0,255,136,.15);
-  --mono:    'Space Mono', monospace;
-  --display: 'Syne', sans-serif;
-  --body:    'DM Sans', sans-serif;
-  --ease:    cubic-bezier(.25,.46,.45,.94);
-  --radius:  10px;
+/* ═══════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0d14;
+  --bg2:#11131e;
+  --bg3:#181b2a;
+  --surface:#1a1d2e;
+  --surface2:#222640;
+  --border:#2a2e4a;
+  --border2:#3a3f60;
+  --text:#d4d8ec;
+  --text2:#8891b0;
+  --muted:#5a6288;
+  --accent:#0ea5e9;
+  --accent2:#38bdf8;
+  --green:#10b981;
+  --green2:#34d399;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --purple:#8b5cf6;
+  --gradient:linear-gradient(135deg,#0ea5e9,#10b981);
+  --gradient2:linear-gradient(135deg,#38bdf8,#34d399);
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',-apple-system,sans-serif;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 4px 30px rgba(0,0,0,.3);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  background: var(--bg0);
-  color: var(--txt);
-  font-family: var(--body);
-  line-height: 1.7;
-  overflow-x: hidden;
-  cursor: none;
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
 }
-::selection { background: rgba(0,255,136,.25); color: #fff; }
+::selection{background:rgba(14,165,233,.3);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
 
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg0); }
-::-webkit-scrollbar-thumb { background: var(--g0); border-radius: 3px; }
+/* ═══════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════ */
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+.section{padding:100px 0}
+.section-label{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+.section-title{
+  font-size:clamp(28px,4vw,44px);
+  font-weight:800;
+  color:#fff;
+  line-height:1.15;
+  margin-bottom:12px;
+}
+.section-desc{
+  font-size:16px;
+  color:var(--text2);
+  max-width:560px;
+  line-height:1.7;
+}
+.section-line{
+  width:50px;
+  height:3px;
+  background:var(--gradient);
+  border-radius:2px;
+  margin-bottom:48px;
+}
 
-/* ════════════════════════════════════════════
-   CURSOR
-════════════════════════════════════════════ */
-#cursor-dot, #cursor-ring {
-  position: fixed; pointer-events: none; z-index: 9999; border-radius: 50%;
-  transition: transform .15s var(--ease), opacity .3s;
-}
-#cursor-dot {
-  width: 6px; height: 6px;
-  background: var(--g0);
-  transform: translate(-50%,-50%);
-  top: 0; left: 0;
-  box-shadow: 0 0 10px var(--g0);
-}
-#cursor-ring {
-  width: 36px; height: 36px;
-  border: 1.5px solid rgba(0,255,136,.5);
-  transform: translate(-50%,-50%);
-  top: 0; left: 0;
-  transition: width .2s, height .2s, border-color .2s, transform .08s;
-}
-body.cursor-hover #cursor-ring {
-  width: 54px; height: 54px;
-  border-color: var(--c0);
+/* ═══════════════════════════════════════
+   SCROLL PROGRESS
+═══════════════════════════════════════ */
+#progress{
+  position:fixed;top:0;left:0;height:3px;z-index:9999;
+  background:var(--gradient);
+  width:0;transition:width .15s linear;
 }
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════ */
+.cursor-dot,.cursor-ring{
+  position:fixed;pointer-events:none;z-index:9998;border-radius:50%;
+  transform:translate(-50%,-50%);top:0;left:0;
+  transition:opacity .2s;
+}
+.cursor-dot{
+  width:6px;height:6px;
+  background:var(--accent);
+  box-shadow:0 0 12px var(--accent);
+}
+.cursor-ring{
+  width:36px;height:36px;
+  border:1.5px solid rgba(14,165,233,.4);
+  transition:width .2s,height .2s,border-color .2s,transform .06s;
+}
+body.hover .cursor-ring{width:52px;height:52px;border-color:var(--green)}
+
+/* ═══════════════════════════════════════
    LOADER
-════════════════════════════════════════════ */
-#loader {
-  position: fixed; inset: 0; z-index: 9000;
-  background: var(--bg0);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 2rem;
-  transition: opacity .6s, visibility .6s;
+═══════════════════════════════════════ */
+#loader{
+  position:fixed;inset:0;z-index:9997;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:24px;
+  background:var(--bg);
+  transition:opacity .5s,visibility .5s;
 }
-#loader.hidden { opacity: 0; visibility: hidden; }
-.loader-logo {
-  font-family: var(--mono);
-  font-size: 1.1rem;
-  color: var(--g0);
-  letter-spacing: .2em;
+#loader.hidden{opacity:0;visibility:hidden}
+.loader-ring{
+  width:48px;height:48px;
+  border:3px solid var(--surface2);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
 }
-.loader-logo span { color: var(--txt-dim); }
-.loader-bar-wrap {
-  width: 220px; height: 2px;
-  background: var(--bg3);
-  border-radius: 2px; overflow: hidden;
-}
-.loader-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--g0), var(--c0));
-  width: 0;
-  transition: width .05s linear;
-}
-.loader-pct {
-  font-family: var(--mono); font-size: .7rem;
-  color: var(--txt-dim); letter-spacing: .1em;
-}
+.loader-text{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:2px}
 
-/* ════════════════════════════════════════════
-   NOISE OVERLAY
-════════════════════════════════════════════ */
-#noise {
-  position: fixed; inset: 0; z-index: 1;
-  opacity: .025; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px;
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 24px;
+  transition:.3s;
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:1168px;margin:0 auto;
 }
+nav.scrolled{
+  background:rgba(11,13,20,.88);
+  backdrop-filter:blur(24px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+  padding:12px 24px;
+}
+.nav-logo{
+  font-family:var(--mono);
+  font-size:15px;
+  font-weight:600;
+  color:#fff;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-logo .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s ease infinite;
+}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:500;
+  color:var(--text2);
+  letter-spacing:.5px;
+  transition:color .2s;
+  position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:100%;
+  height:1.5px;background:var(--accent);
+  transition:right .25s;
+}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{right:0}
+.nav-links a.active{color:#fff}
+.nav-links a.active::after{right:0}
+.nav-cta{
+  font-family:var(--mono);font-size:12px;font-weight:600;
+  padding:10px 24px;
+  background:var(--gradient);
+  color:#fff;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+}
+.nav-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(14,165,233,.35);
+}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);background:var(--accent)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);background:var(--accent)}
 
-/* ════════════════════════════════════════════
-   CANVAS
-════════════════════════════════════════════ */
-#matrix-canvas {
-  position: fixed; inset: 0; z-index: 0;
-  pointer-events: none; opacity: .07;
+/* ═══════════════════════════════════════
+   MOBILE MENU
+═══════════════════════════════════════ */
+.mobile-menu{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:rgba(11,13,20,.97);backdrop-filter:blur(20px);
+  flex-direction:column;align-items:center;justify-content:center;gap:32px;
 }
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  font-size:24px;font-weight:700;color:var(--text);
+  transition:color .2s;
+}
+.mobile-menu a:hover{color:var(--accent)}
 
-/* ════════════════════════════════════════════
-   NAVIGATION
-════════════════════════════════════════════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.1rem 5vw;
-  transition: background .3s, border-color .3s, padding .3s;
-}
-nav.scrolled {
-  background: rgba(3,6,13,.9);
-  backdrop-filter: blur(20px) saturate(1.3);
-  border-bottom: 1px solid var(--border);
-  padding: .8rem 5vw;
-}
-.nav-logo {
-  font-family: var(--mono); font-size: .85rem;
-  color: var(--g0); text-decoration: none;
-  letter-spacing: .1em;
-  display: flex; align-items: center; gap: .4rem;
-}
-.nav-logo .blink { animation: blink 1s step-end infinite; }
-.nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
-.nav-links a {
-  font-family: var(--mono); font-size: .72rem;
-  color: var(--txt-dim); text-decoration: none;
-  letter-spacing: .12em; text-transform: uppercase;
-  position: relative; transition: color .2s;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: -4px; left: 0; right: 100%;
-  height: 1px; background: var(--g0);
-  transition: right .25s var(--ease);
-}
-.nav-links a:hover { color: var(--g0); }
-.nav-links a:hover::after { right: 0; }
-.nav-links a.active { color: var(--g0); }
-.nav-links a.active::after { right: 0; }
-.nav-cta {
-  font-family: var(--mono); font-size: .72rem;
-  color: var(--g0); border: 1px solid var(--g0);
-  padding: .5rem 1.2rem; border-radius: 3px;
-  text-decoration: none; letter-spacing: .1em;
-  transition: background .2s, box-shadow .2s, transform .2s;
-}
-.nav-cta:hover {
-  background: rgba(0,255,136,.1);
-  box-shadow: 0 0 20px rgba(0,255,136,.3);
-  transform: translateY(-1px);
-}
-.hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; padding: 4px;
-}
-.hamburger span {
-  display: block; width: 24px; height: 2px;
-  background: var(--txt); border-radius: 2px;
-  transition: transform .3s, opacity .3s, background .2s;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--g0); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--g0); }
-
-/* Mobile menu */
-.mobile-menu {
-  display: none; position: fixed; inset: 0; z-index: 499;
-  background: rgba(3,6,13,.97); backdrop-filter: blur(20px);
-  flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
-}
-.mobile-menu.open { display: flex; }
-.mobile-menu a {
-  font-family: var(--display); font-size: 2rem; font-weight: 700;
-  color: var(--txt); text-decoration: none; letter-spacing: .05em;
-  transition: color .2s;
-}
-.mobile-menu a:hover { color: var(--g0); }
-
-/* ════════════════════════════════════════════
-   SECTION WRAPPERS
-════════════════════════════════════════════ */
-.wrap { position: relative; z-index: 2; }
-section { padding: 7rem 5vw; }
-.container { max-width: 1120px; margin: 0 auto; }
-.sec-eyebrow {
-  font-family: var(--mono); font-size: .7rem;
-  color: var(--g0); letter-spacing: .25em; text-transform: uppercase;
-  margin-bottom: .6rem;
-}
-.sec-title {
-  font-family: var(--display); font-size: clamp(2.2rem, 5vw, 3.8rem);
-  font-weight: 800; color: #fff; line-height: 1.05; margin-bottom: 1rem;
-}
-.sec-rule {
-  width: 50px; height: 3px;
-  background: linear-gradient(90deg, var(--g0), var(--c0));
-  border-radius: 2px; margin-bottom: 3.5rem;
-}
-
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    HERO
-════════════════════════════════════════════ */
-#hero {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: flex-start;
-  padding: 0 5vw;
-  position: relative; overflow: hidden;
+═══════════════════════════════════════ */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding-top:80px;
 }
-.hero-grid {
-  display: grid; grid-template-columns: 1fr 420px;
-  align-items: center; gap: 4rem;
-  width: 100%; max-width: 1120px; margin: 0 auto;
-  padding-top: 5rem;
+#hero .bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(14,165,233,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(14,165,233,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  z-index:0;
 }
-.hero-badge {
-  display: inline-flex; align-items: center; gap: .5rem;
-  font-family: var(--mono); font-size: .72rem;
-  color: var(--g0); border: 1px solid rgba(0,255,136,.3);
-  background: rgba(0,255,136,.06);
-  padding: .35rem 1rem; border-radius: 100px;
-  letter-spacing: .12em; margin-bottom: 1.8rem;
-  opacity: 0; animation: slideUp .6s .3s var(--ease) forwards;
+#hero .bg-glow{
+  position:absolute;
+  top:-20%;left:-10%;
+  width:60%;height:80%;
+  background:radial-gradient(circle,rgba(14,165,233,.08),transparent 70%);
+  z-index:0;
+  pointer-events:none;
 }
-.hero-badge .pulse {
-  width: 7px; height: 7px; background: var(--g0); border-radius: 50%;
-  animation: pulse 1.5s ease infinite;
+.hero-content{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px;width:100%}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;
+  padding:6px 16px;
+  border:1px solid rgba(14,165,233,.25);
+  border-radius:100px;
+  color:var(--accent);
+  background:rgba(14,165,233,.06);
+  letter-spacing:1px;
+  margin-bottom:24px;
 }
-.hero-name {
-  font-family: var(--display); font-size: clamp(3.2rem, 7vw, 6rem);
-  font-weight: 800; color: #fff; line-height: 1; margin-bottom: .5rem;
-  opacity: 0; animation: slideUp .7s .45s var(--ease) forwards;
+.hero-badge .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease infinite}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero-name{
+  font-size:clamp(36px,6vw,60px);
+  font-weight:800;
+  color:#fff;
+  line-height:1.05;
+  margin-bottom:8px;
 }
-.hero-name .line2 {
-  display: block;
-  -webkit-text-stroke: 1.5px rgba(255,255,255,.35);
-  color: transparent;
-  position: relative;
+.hero-name .gradient{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-role{
+  font-family:var(--mono);
+  font-size:clamp(14px,1.5vw,17px);
+  color:var(--accent);
+  margin-bottom:20px;
+  min-height:28px;
 }
-.hero-name .line2 .filled {
-  color: var(--g0);
-  -webkit-text-stroke: 0;
+.hero-role .cursor{animation:blink 1s step-end infinite}
+.hero-desc{
+  font-size:15px;
+  color:var(--text2);
+  max-width:480px;
+  line-height:1.8;
+  margin-bottom:32px;
 }
-.hero-roles {
-  font-family: var(--mono); font-size: clamp(.85rem, 1.8vw, 1.05rem);
-  color: var(--c0); margin-bottom: 1.5rem; min-height: 1.8em;
-  opacity: 0; animation: slideUp .7s .6s var(--ease) forwards;
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary,.btn-secondary{
+  font-family:var(--mono);font-size:13px;font-weight:600;
+  padding:14px 28px;
+  border-radius:10px;
+  cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:.25s;
+  border:none;
 }
-.hero-roles .tw-cursor { color: var(--g0); animation: blink 1s step-end infinite; }
-.hero-desc {
-  font-size: .97rem; color: var(--txt-dim); max-width: 480px;
-  margin-bottom: 2.5rem; line-height: 1.8;
-  opacity: 0; animation: slideUp .7s .75s var(--ease) forwards;
+.btn-primary{
+  background:var(--gradient);
+  color:#fff;
+  box-shadow:0 4px 20px rgba(14,165,233,.3);
 }
-.hero-btns {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  opacity: 0; animation: slideUp .7s .9s var(--ease) forwards;
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 40px rgba(14,165,233,.45);
 }
-.btn-primary, .btn-outline, .btn-ghost2 {
-  font-family: var(--mono); font-size: .78rem;
-  letter-spacing: .08em; padding: .85rem 2rem;
-  border-radius: 4px; cursor: pointer;
-  text-decoration: none; display: inline-flex;
-  align-items: center; gap: .5rem;
-  transition: all .25s var(--ease);
-  position: relative; overflow: hidden;
+.btn-secondary{
+  background:var(--surface);
+  color:var(--text);
+  border:1px solid var(--border);
 }
-.btn-primary {
-  background: var(--g0); color: #030912; font-weight: 700; border: none;
+.btn-secondary:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  transform:translateY(-3px);
 }
-.btn-primary::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
-  opacity: 0; transition: opacity .2s;
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  margin-top:40px;
 }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,255,136,.4); }
-.btn-primary:hover::before { opacity: 1; }
-.btn-outline {
-  background: transparent; color: var(--c0); border: 1px solid var(--c0);
+.hero-stat{
+  padding:20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  text-align:center;
 }
-.btn-outline:hover {
-  background: rgba(0,229,255,.08); transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0,229,255,.2);
+.hero-stat-num{
+  font-size:28px;font-weight:800;
+  background:var(--gradient);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  display:block;
+  line-height:1;
+  margin-bottom:4px;
 }
+.hero-stat-lbl{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:.5px}
 
-/* Hero right: terminal card */
-.hero-terminal {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(0,229,255,.05);
-  opacity: 0; animation: slideUp .9s 1s var(--ease) forwards;
-  position: relative;
+/* Hero right panel */
+.hero-panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
 }
-.hero-terminal::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--c0), transparent);
+.panel-header{
+  background:var(--bg3);
+  padding:14px 18px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border);
 }
-.term-bar {
-  background: var(--bg3); padding: .75rem 1rem;
-  display: flex; align-items: center; gap: .5rem; border-bottom: 1px solid var(--border);
-}
-.term-dot { width: 11px; height: 11px; border-radius: 50%; }
-.term-dot.r { background: #ff5f57; }
-.term-dot.y { background: #ffbd2e; }
-.term-dot.g { background: #28c840; }
-.term-title { font-family: var(--mono); font-size: .65rem; color: var(--txt-dim); margin: 0 auto; }
-.term-body { padding: 1.4rem; font-family: var(--mono); font-size: .78rem; line-height: 1.9; }
-.tp { color: var(--g0); }
-.tc { color: #fff; }
-.tk { color: var(--c0); }
-.tv { color: #ffb86c; }
-.ts { color: #b8cfe8; }
-.tb { color: var(--txt-dim); }
-.t-row { display: block; }
+.panel-dot{width:12px;height:12px;border-radius:50%}
+.panel-dot.r{background:#ff5f57}
+.panel-dot.y{background:#ffbd2e}
+.panel-dot.g{background:#28c840}
+.panel-title{font-family:var(--mono);font-size:11px;color:var(--muted);margin:0 auto}
+.panel-body{padding:20px;font-family:var(--mono);font-size:13px;line-height:2;min-height:260px}
+.panel-line{display:block}
+.panel-kw{color:var(--accent2)}
+.panel-str{color:#fbbf24}
+.panel-fn{color:var(--green2)}
+.panel-cm{color:var(--muted)}
+.panel-bool{color:#c084fc}
+.panel-json{color:var(--text2)}
 
-/* Hero scroll cue */
-.hero-scroll {
-  position: absolute; bottom: 2.5rem; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: .5rem;
-  font-family: var(--mono); font-size: .62rem; color: var(--txt-dim);
-  letter-spacing: .15em;
-  opacity: 0; animation: fadeIn .7s 1.5s forwards;
-}
-.scroll-line {
-  width: 1px; height: 50px;
-  background: linear-gradient(180deg, var(--g0), transparent);
-  animation: scrollDown 1.8s ease infinite;
-}
-
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    ABOUT
-════════════════════════════════════════════ */
-#about { background: var(--bg1); }
-.about-layout {
-  display: grid; grid-template-columns: 1.1fr 1fr;
-  gap: 5rem; align-items: start;
+═══════════════════════════════════════ */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.about-text p{font-size:15px;color:var(--text2);margin-bottom:16px;line-height:1.8}
+.about-text p strong{color:var(--text);font-weight:600}
+.about-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{
+  font-family:var(--mono);font-size:11px;
+  padding:6px 14px;
+  border-radius:100px;
+  border:1px solid var(--border);
+  color:var(--text2);
+  background:var(--surface);
+  letter-spacing:.3px;
+  transition:.2s;
 }
-.about-text p { font-size: .95rem; color: var(--txt-dim); margin-bottom: 1.1rem; }
-.about-text p strong { color: var(--txt); font-weight: 500; }
-.about-highlights {
-  display: flex; flex-wrap: wrap; gap: .6rem;
-  margin-top: 1.8rem;
-}
-.hl-chip {
-  font-family: var(--mono); font-size: .7rem;
-  padding: .3rem .85rem; border-radius: 100px;
-  border: 1px solid rgba(0,255,136,.25);
-  color: var(--g0); background: rgba(0,255,136,.05);
-  letter-spacing: .08em;
-}
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.stat-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 1.6rem;
-  text-align: center; transition: all .25s var(--ease);
-  position: relative; overflow: hidden;
-}
-.stat-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--g0), var(--c0));
-  transform: scaleX(0); transition: transform .3s; transform-origin: left;
-}
-.stat-card:hover { transform: translateY(-4px); border-color: var(--border2); }
-.stat-card:hover::after { transform: scaleX(1); }
-.stat-num {
-  font-family: var(--display); font-size: 2.5rem; font-weight: 800;
-  color: var(--g0); display: block; line-height: 1;
-  margin-bottom: .4rem;
-}
-.stat-lbl { font-family: var(--mono); font-size: .65rem; color: var(--txt-dim); letter-spacing: .12em; }
+.chip:hover{border-color:var(--accent);color:var(--accent);background:rgba(14,165,233,.06)}
 
-/* ════════════════════════════════════════════
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:28px 24px;
+  text-align:center;
+  transition:.25s;
+  position:relative;overflow:hidden;
+}
+.stat-box::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--gradient);
+  transform:scaleX(0);
+  transition:transform .35s;
+  transform-origin:left;
+}
+.stat-box:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat-box:hover::before{transform:scaleX(1)}
+.stat-num{
+  font-size:32px;font-weight:800;
+  color:#fff;
+  display:block;line-height:1;
+  margin-bottom:6px;
+}
+.stat-num .plus{color:var(--accent)}
+.stat-lbl{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:.5px}
+
+/* ═══════════════════════════════════════
    SKILLS
-════════════════════════════════════════════ */
-#skills { background: var(--bg0); }
-.skills-layout {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4rem; align-items: start;
+═══════════════════════════════════════ */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.skill-cats{display:flex;flex-direction:column;gap:12px}
+.skill-cat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:18px 20px;
+  transition:.25s;
+  cursor:default;
 }
-.skill-categories { display: flex; flex-direction: column; gap: 1rem; }
-.skill-cat {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 1.4rem 1.6rem;
-  transition: border-color .2s, box-shadow .2s;
-  cursor: default;
+.skill-cat:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(14,165,233,.06)}
+.skill-cat-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.skill-cat-icon{font-size:18px}
+.skill-cat-title{font-weight:700;color:#fff;font-size:14px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px}
+.skill-tag{
+  font-family:var(--mono);font-size:11px;
+  padding:4px 12px;
+  border-radius:6px;
+  border:1px solid;
+  letter-spacing:.2px;
+  transition:.15s;
 }
-.skill-cat:hover { border-color: var(--border2); box-shadow: 0 4px 30px rgba(0,255,136,.07); }
-.cat-row { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
-.cat-ico { font-size: 1.2rem; }
-.cat-ttl { font-family: var(--display); font-size: 1rem; font-weight: 700; color: #fff; }
-.tags { display: flex; flex-wrap: wrap; gap: .45rem; }
-.tag {
-  font-family: var(--mono); font-size: .68rem; padding: .25rem .7rem;
-  border-radius: 3px; border: 1px solid; letter-spacing: .05em;
-  transition: transform .15s;
-}
-.tag:hover { transform: translateY(-1px); }
-.tg { color: var(--g0); border-color: rgba(0,255,136,.3); background: rgba(0,255,136,.06); }
-.tc2{ color: var(--c0); border-color: rgba(0,229,255,.3); background: rgba(0,229,255,.06); }
-.tp2{ color: #c084fc; border-color: rgba(192,132,252,.3); background: rgba(192,132,252,.06); }
-.ta { color: var(--amber); border-color: rgba(255,179,0,.3); background: rgba(255,179,0,.06); }
+.skill-tag:hover{transform:translateY(-1px)}
+.st-blue{color:var(--accent);border-color:rgba(14,165,233,.25);background:rgba(14,165,233,.06)}
+.st-green{color:var(--green);border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.06)}
+.st-purple{color:var(--purple);border-color:rgba(139,92,246,.25);background:rgba(139,92,246,.06)}
+.st-amber{color:var(--amber);border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.06)}
 
-/* Skill bars */
-.skill-bars { display: flex; flex-direction: column; gap: 1.4rem; }
-.skill-bar-item {}
-.skill-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
-.skill-bar-name { font-family: var(--mono); font-size: .78rem; color: var(--txt); }
-.skill-bar-pct { font-family: var(--mono); font-size: .7rem; color: var(--g0); }
-.skill-bar-track {
-  height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden;
+.skill-bars{display:flex;flex-direction:column;gap:20px}
+.skill-bar{}
+.skill-bar-header{display:flex;justify-content:space-between;margin-bottom:8px}
+.skill-bar-name{font-size:13px;font-weight:500;color:var(--text)}
+.skill-bar-pct{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.skill-bar-track{
+  height:6px;
+  background:var(--bg3);
+  border-radius:3px;
+  overflow:hidden;
 }
-.skill-bar-fill {
-  height: 100%; width: 0; border-radius: 2px;
-  background: linear-gradient(90deg, var(--g0), var(--c0));
-  transition: width 1.2s var(--ease);
-  box-shadow: 0 0 12px rgba(0,255,136,.4);
+.skill-bar-fill{
+  height:100%;width:0;
+  border-radius:3px;
+  background:var(--gradient);
+  transition:width 1.2s;
+  box-shadow:0 0 12px rgba(14,165,233,.3);
 }
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    PROJECTS
-════════════════════════════════════════════ */
-#projects { background: var(--bg1); }
-.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-.project-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 2rem;
-  display: flex; flex-direction: column;
-  transition: transform .3s var(--ease), box-shadow .3s, border-color .3s;
-  position: relative; overflow: hidden;
-  transform-style: preserve-3d; will-change: transform;
+═══════════════════════════════════════ */
+#projects{background:var(--bg2)}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.proj-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:28px;
+  transition:.3s;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
 }
-.project-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--g0), var(--c0));
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .4s var(--ease);
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gradient);
+  transform:scaleX(0);
+  transition:transform .4s;
+  transform-origin:left;
 }
-.project-card:hover::before { transform: scaleX(1); }
-.project-card:hover {
-  border-color: rgba(0,229,255,.2);
-  box-shadow: 0 20px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(0,229,255,.05);
+.proj-card:hover{
+  border-color:rgba(14,165,233,.2);
+  transform:translateY(-6px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
 }
-.proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; }
-.proj-num { font-family: var(--mono); font-size: .65rem; color: var(--g0); letter-spacing: .2em; }
-.proj-links { display: flex; gap: .7rem; }
-.proj-link {
-  color: var(--txt-dim); text-decoration: none; font-size: 1rem;
-  transition: color .2s, transform .2s;
+.proj-card:hover::before{transform:scaleX(1)}
+.proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;padding:32px}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.proj-num{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:2px}
+.proj-links{display:flex;gap:10px}
+.proj-link{
+  color:var(--muted);
+  font-size:16px;
+  transition:.2s;
 }
-.proj-link:hover { color: var(--g0); transform: translateY(-2px); }
-.proj-title {
-  font-family: var(--display); font-size: 1.25rem; font-weight: 700;
-  color: #fff; margin-bottom: .75rem;
+.proj-link:hover{color:var(--accent);transform:translateY(-2px)}
+.proj-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.7;flex:1;margin-bottom:16px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.proj-tag{
+  font-family:var(--mono);font-size:10px;
+  padding:3px 10px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  color:var(--text2);
+  background:var(--bg3);
 }
-.proj-desc { font-size: .88rem; color: var(--txt-dim); margin-bottom: 1.5rem; flex: 1; line-height: 1.7; }
-.proj-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.6rem; }
-.proj-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 1rem; border-top: 1px solid var(--border);
-}
-.proj-status {
-  font-family: var(--mono); font-size: .65rem; letter-spacing: .1em;
-  display: flex; align-items: center; gap: .4rem;
-}
-.proj-status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--g0); animation: pulse 2s ease infinite; }
-.proj-arrow {
-  font-family: var(--mono); font-size: .72rem; color: var(--c0);
-  text-decoration: none; letter-spacing: .08em;
-  display: flex; align-items: center; gap: .3rem;
-  transition: gap .2s, color .2s;
-}
-.proj-arrow:hover { gap: .6rem; color: var(--g0); }
+.proj-foot{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--border)}
+.proj-status{font-family:var(--mono);font-size:10px;color:var(--green);display:flex;align-items:center;gap:6px}
+.proj-status .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease infinite}
+.proj-arrow{font-family:var(--mono);font-size:11px;color:var(--accent);display:flex;align-items:center;gap:6px;transition:.2s}
+.proj-arrow:hover{gap:10px}
 
-/* Featured project (full width) */
-.project-card.featured {
-  grid-column: 1 / -1;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 2rem; padding: 2.5rem;
+.proj-preview{
+  background:var(--bg3);
+  border-radius:8px;
+  border:1px solid var(--border);
+  padding:20px;
+  font-family:var(--mono);font-size:11px;
+  line-height:2;
+  overflow:hidden;
 }
-.project-card.featured .proj-content {}
-.proj-preview {
-  background: var(--bg3); border-radius: 8px;
-  border: 1px solid var(--border); overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  min-height: 200px;
-  font-family: var(--mono); font-size: .75rem;
-  color: var(--g0); flex-direction: column; gap: 1rem;
-  position: relative;
-}
-.preview-code {
-  text-align: left; padding: 1.5rem;
-  line-height: 1.8; font-size: .72rem;
-  width: 100%;
-}
-.pc-line { display: block; }
-.pc-k { color: var(--c0); }
-.pc-f { color: var(--g0); }
-.pc-s { color: #ffb86c; }
-.pc-c { color: var(--txt-dim); }
+.code-kw{color:var(--accent2)}
+.code-fn{color:var(--green2)}
+.code-str{color:#fbbf24}
+.code-cm{color:var(--muted)}
+.code-op{color:#c084fc}
 
-/* ════════════════════════════════════════════
-   EXPERIENCE / TIMELINE
-════════════════════════════════════════════ */
-#experience { background: var(--bg0); }
-.timeline { position: relative; padding-left: 2rem; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
-  background: linear-gradient(180deg, var(--g0), var(--c0), transparent);
+/* ═══════════════════════════════════════
+   EXPERIENCE
+═══════════════════════════════════════ */
+.timeline{position:relative;padding-left:32px;max-width:700px}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:1.5px;
+  background:linear-gradient(180deg,var(--accent),var(--green),transparent);
 }
-.tl-item { position: relative; padding-bottom: 3rem; padding-left: 2rem; }
-.tl-item:last-child { padding-bottom: 0; }
-.tl-dot {
-  position: absolute; left: -2.45rem; top: .3rem;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--g0); border: 2px solid var(--bg0);
-  box-shadow: 0 0 12px var(--g0);
+.tl-item{position:relative;padding-bottom:40px;padding-left:28px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{
+  position:absolute;left:-36px;top:4px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);
+  border:3px solid var(--bg);
+  box-shadow:0 0 0 3px var(--accent);
 }
-.tl-date { font-family: var(--mono); font-size: .68rem; color: var(--g0); letter-spacing: .12em; margin-bottom: .4rem; }
-.tl-title { font-family: var(--display); font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: .3rem; }
-.tl-place { font-family: var(--mono); font-size: .75rem; color: var(--c0); margin-bottom: .75rem; }
-.tl-desc { font-size: .9rem; color: var(--txt-dim); max-width: 600px; }
-.tl-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+.tl-date{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:1px;margin-bottom:4px}
+.tl-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px}
+.tl-place{font-family:var(--mono);font-size:12px;color:var(--green);margin-bottom:8px}
+.tl-desc{font-size:14px;color:var(--text2);line-height:1.7}
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    SERVICES
-════════════════════════════════════════════ */
-#services { background: var(--bg1); }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.service-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 2rem;
-  transition: all .3s var(--ease); position: relative; overflow: hidden;
+═══════════════════════════════════════ */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:28px;
+  transition:.3s;
+  position:relative;overflow:hidden;
 }
-.service-card::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(0,255,136,.06), transparent 70%);
-  opacity: 0; transition: opacity .3s;
+.svc-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0,rgba(14,165,233,.06),transparent 70%);
+  opacity:0;transition:opacity .3s;
 }
-.service-card:hover { transform: translateY(-6px); border-color: var(--border2); }
-.service-card:hover::after { opacity: 1; }
-.svc-icon {
-  font-size: 2rem; margin-bottom: 1.2rem;
-  display: block;
+.svc-card:hover{transform:translateY(-6px);border-color:rgba(14,165,233,.2)}
+.svc-card:hover::after{opacity:1}
+.svc-icon{font-size:28px;margin-bottom:16px;display:block}
+.svc-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.svc-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px}
+.svc-list{list-style:none}
+.svc-list li{
+  font-family:var(--mono);font-size:11px;
+  color:var(--text2);
+  padding:4px 0;
+  display:flex;align-items:center;gap:8px;
 }
-.svc-title { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: .65rem; }
-.svc-desc { font-size: .875rem; color: var(--txt-dim); line-height: 1.7; margin-bottom: 1.2rem; }
-.svc-list { list-style: none; }
-.svc-list li {
-  font-family: var(--mono); font-size: .72rem; color: var(--txt-dim);
-  padding: .3rem 0;
-  display: flex; align-items: center; gap: .5rem;
-}
-.svc-list li::before { content: '▸'; color: var(--g0); }
+.svc-list li::before{content:'\25B8';color:var(--accent)}
 
-/* ════════════════════════════════════════════
-   INTERACTIVE TERMINAL
-════════════════════════════════════════════ */
-#terminal-sec { background: var(--bg0); }
-.terminal-outer {
-  max-width: 800px; margin: 0 auto;
-  background: #04080f; border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 60px rgba(0,255,136,.04);
-  position: relative;
-}
-.terminal-outer::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--g0) 40%, var(--c0) 60%, transparent);
-}
-.t-header {
-  background: #070d1a; padding: .85rem 1.2rem;
-  display: flex; align-items: center; gap: .5rem;
-  border-bottom: 1px solid var(--border);
-}
-.t-header-title { font-family: var(--mono); font-size: .65rem; color: var(--txt-dim); margin: 0 auto; }
-.t-content {
-  padding: 1.8rem; font-family: var(--mono);
-  font-size: .8rem; line-height: 2;
-  min-height: 320px; max-height: 420px; overflow-y: auto;
-}
-.t-content::-webkit-scrollbar { width: 3px; }
-.t-content::-webkit-scrollbar-thumb { background: var(--g0); }
-.t-input-row {
-  padding: .6rem 1.2rem 1.2rem;
-  display: flex; align-items: center; gap: .5rem;
-  border-top: 1px solid var(--border);
-}
-.t-prompt-lbl { font-family: var(--mono); font-size: .8rem; color: var(--g0); white-space: nowrap; }
-#terminal-input {
-  flex: 1; background: transparent; border: none; outline: none;
-  font-family: var(--mono); font-size: .8rem; color: #fff;
-  caret-color: var(--g0);
-}
-.t-hint { font-family: var(--mono); font-size: .65rem; color: var(--txt-dim); padding: 0 1.2rem .6rem; }
-
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    CONTACT
-════════════════════════════════════════════ */
-#contact { background: var(--bg1); }
-.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-.contact-info {}
-.contact-intro { font-size: .95rem; color: var(--txt-dim); margin-bottom: 2.5rem; }
-.contact-items { display: flex; flex-direction: column; gap: 1.1rem; }
-.c-item {
-  display: flex; align-items: center; gap: 1rem;
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 1.1rem 1.3rem;
-  text-decoration: none;
-  transition: border-color .2s, transform .2s, box-shadow .2s;
+═══════════════════════════════════════ */
+#contact{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.contact-intro{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:32px}
+.contact-items{display:flex;flex-direction:column;gap:12px}
+.c-item{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:16px 20px;
+  transition:.25s;
 }
-.c-item:hover { border-color: var(--border2); transform: translateX(6px); box-shadow: -4px 0 20px rgba(0,255,136,.1); }
-.c-ico { font-size: 1.3rem; width: 36px; text-align: center; flex-shrink: 0; }
-.c-detail {}
-.c-lbl { font-family: var(--mono); font-size: .62rem; color: var(--txt-dim); letter-spacing: .12em; display: block; margin-bottom: .15rem; }
-.c-val { font-size: .9rem; color: var(--txt); }
+.c-item:hover{border-color:var(--accent);transform:translateX(6px)}
+.c-item .ico{font-size:18px;width:36px;text-align:center}
+.c-item .lbl{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;display:block;margin-bottom:2px}
+.c-item .val{font-size:14px;color:var(--text)}
 
-/* Form */
-.contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
-.form-group { display: flex; flex-direction: column; gap: .45rem; }
-.form-label { font-family: var(--mono); font-size: .68rem; color: var(--txt-dim); letter-spacing: .1em; }
-.form-input, .form-textarea {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 6px; padding: .85rem 1rem;
-  font-family: var(--body); font-size: .9rem; color: #fff;
-  outline: none; transition: border-color .2s, box-shadow .2s;
-  resize: none;
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-family:var(--mono);font-size:11px;color:var(--text2);letter-spacing:.5px}
+.form-input,.form-textarea{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:12px 16px;
+  font-family:var(--sans);
+  font-size:14px;
+  color:#fff;
+  outline:none;
+  transition:.2s;
+  resize:none;
 }
-.form-input:focus, .form-textarea:focus {
-  border-color: rgba(0,255,136,.5);
-  box-shadow: 0 0 0 3px rgba(0,255,136,.07);
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(14,165,233,.1);
 }
-.form-textarea { min-height: 130px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-submit {
-  font-family: var(--mono); font-size: .78rem; letter-spacing: .08em;
-  padding: .9rem 2rem; background: var(--g0); color: #030912;
-  border: none; border-radius: 4px; font-weight: 700;
-  cursor: pointer; transition: all .25s var(--ease);
-  display: flex; align-items: center; gap: .5rem;
+.form-textarea{min-height:120px}
+.form-submit{
+  font-family:var(--mono);font-size:13px;font-weight:600;
+  padding:14px 28px;
+  background:var(--gradient);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.25s;
+  display:flex;align-items:center;gap:8px;
+  justify-content:center;
 }
-.form-submit:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,255,136,.4); }
-#form-msg { font-family: var(--mono); font-size: .75rem; text-align: center; min-height: 1.2em; }
+.form-submit:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(14,165,233,.35);
+}
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    FOOTER
-════════════════════════════════════════════ */
-footer {
-  background: var(--bg0); border-top: 1px solid var(--border);
-  padding: 2.5rem 5vw;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 1rem;
+═══════════════════════════════════════ */
+footer{
+  padding:32px 24px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+  max-width:1168px;margin:0 auto;
 }
-.footer-logo { font-family: var(--mono); font-size: .82rem; color: var(--g0); }
-.footer-copy { font-family: var(--mono); font-size: .68rem; color: var(--txt-dim); }
-.back-top {
-  font-family: var(--mono); font-size: .68rem; color: var(--c0);
-  text-decoration: none; letter-spacing: .1em;
-  display: flex; align-items: center; gap: .4rem;
-  transition: color .2s;
-}
-.back-top:hover { color: var(--g0); }
+.footer-logo{font-family:var(--mono);font-size:13px;color:var(--text2)}
+.footer-logo span{color:var(--accent)}
+.footer-copy{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.footer-links{display:flex;gap:16px}
+.footer-links a{color:var(--muted);font-size:16px;transition:.2s}
+.footer-links a:hover{color:var(--accent);transform:translateY(-2px)}
 
-/* ════════════════════════════════════════════
-   REVEAL ANIMATIONS
-════════════════════════════════════════════ */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-left.visible { opacity: 1; transform: none; }
-.reveal-right { opacity: 0; transform: translateX(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal-right.visible { opacity: 1; transform: none; }
+/* ═══════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════ */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-/* Stagger children */
-.stagger > * { opacity: 0; transform: translateY(20px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-.stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: .05s; }
-.stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: .15s; }
-.stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: .25s; }
-.stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: .35s; }
-.stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: .45s; }
-.stagger.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: .55s; }
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .7s,transform .7s}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .7s,transform .7s}
+.reveal-right.visible{opacity:1;transform:none}
 
-/* ════════════════════════════════════════════
-   KEYFRAMES
-════════════════════════════════════════════ */
-@keyframes slideUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
-@keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
-@keyframes blink   { 50% { opacity: 0; } }
-@keyframes pulse   { 0%,100%{box-shadow:0 0 0 0 rgba(0,255,136,.4);} 50%{box-shadow:0 0 0 6px rgba(0,255,136,0);} }
-@keyframes scrollDown { 0%{opacity:0;transform:scaleY(0);transform-origin:top;} 40%{opacity:1;transform:scaleY(1);} 100%{opacity:0;transform:translateY(100%);} }
-@keyframes glitch1 { 0%,100%{clip-path:inset(0 0 95% 0)} 50%{clip-path:inset(30% 0 50% 0)} }
-@keyframes glitch2 { 0%,100%{clip-path:inset(60% 0 20% 0)} 50%{clip-path:inset(80% 0 5% 0)} }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.stagger > *{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s}
+.stagger.visible > *:nth-child(1){opacity:1;transform:none;transition-delay:.05s}
+.stagger.visible > *:nth-child(2){opacity:1;transform:none;transition-delay:.1s}
+.stagger.visible > *:nth-child(3){opacity:1;transform:none;transition-delay:.15s}
+.stagger.visible > *:nth-child(4){opacity:1;transform:none;transition-delay:.2s}
+.stagger.visible > *:nth-child(5){opacity:1;transform:none;transition-delay:.25s}
+.stagger.visible > *:nth-child(6){opacity:1;transform:none;transition-delay:.3s}
 
-/* ════════════════════════════════════════════
+/* ═══════════════════════════════════════
    RESPONSIVE
-════════════════════════════════════════════ */
-@media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-terminal { display: none; }
-  .about-layout, .skills-layout, .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .project-card.featured { grid-column: auto; display: flex; flex-direction: column; }
-  .services-grid { grid-template-columns: 1fr 1fr; }
+═══════════════════════════════════════ */
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  .hero-panel{display:none}
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .skills-grid{grid-template-columns:1fr;gap:32px}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr;gap:32px}
+  .projects-grid{grid-template-columns:1fr}
+  .proj-card.featured{grid-column:auto;grid-template-columns:1fr}
 }
-@media (max-width: 640px) {
-  section { padding: 5rem 5vw; }
-  .nav-links, .nav-cta { display: none; }
-  .hamburger { display: flex; }
-  .services-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .hero-btns { flex-direction: column; }
-  footer { flex-direction: column; align-items: flex-start; }
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .section{padding:64px 0}
+  .hero-stats{grid-template-columns:repeat(3,1fr);gap:10px}
+  .hero-stat{padding:14px}
+  .hero-stat-num{font-size:22px}
+  .stats-grid{gap:12px}
+  .stat-box{padding:20px 16px}
+  .stat-num{font-size:26px}
 }
-</style>
-<!-- Scroll Progress CSS -->
-<style>
-#progress-bar{position:fixed;top:0;left:0;width:0;height:2px;z-index:9998;background:linear-gradient(90deg,var(--g0),var(--c0),var(--g0));transition:width .1s linear;box-shadow:0 0 10px var(--g0)}
+@media(max-width:480px){
+  .hero-btns{flex-direction:column}
+  .btn-primary,.btn-secondary{width:100%;justify-content:center}
+  .hero-stats{grid-template-columns:repeat(3,1fr);gap:8px}
+  .hero-stat-num{font-size:18px}
+  .hero-stat-lbl{font-size:9px}
+  .services-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .contact-grid{gap:24px}
+  .proj-card.featured{grid-template-columns:1fr}
+  .proj-preview{display:none}
+}
+@media(max-width:380px){
+  .hero-stat-lbl{font-size:8px;letter-spacing:0}
+  .hero-stat{padding:10px}
+}
 </style>
 </head>
 <body>
-<!-- Scroll Progress -->
-<div id="progress-bar"></div>
+<!-- Progress -->
+<div id="progress"></div>
 
-<!-- Custom Cursor -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-
-<!-- Noise -->
-<div id="noise"></div>
-
-<!-- Matrix Canvas -->
-<canvas id="matrix-canvas"></canvas>
+<!-- Cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
 
 <!-- Loader -->
 <div id="loader">
-  <div class="loader-logo"><span>~/</span>steve.portfolio</div>
-  <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
-  <div class="loader-pct" id="loader-pct">0%</div>
+  <div class="loader-ring"></div>
+  <div class="loader-text">loading portfolio...</div>
 </div>
 
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#about" onclick="closeMobile()">About</a>
-  <a href="#skills" onclick="closeMobile()">Skills</a>
-  <a href="#projects" onclick="closeMobile()">Projects</a>
-  <a href="#services" onclick="closeMobile()">Services</a>
-  <a href="#contact" onclick="closeMobile()">Contact</a>
-</div>
-
-<!-- NAV -->
-<nav id="navbar">
+<!-- Nav -->
+<nav id="nav">
   <a href="#hero" class="nav-logo">
-    <span class="blink">_</span>steve.dev
-    <span style="display:inline-flex;align-items:center;gap:3px;margin-left:6px;font-size:9px;color:var(--green);letter-spacing:.1em;font-family:var(--mono)">
-      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease infinite;display:inline-block"></span>
-      LIVE
-    </span>
+    <span class="dot"></span>_lee.dev
   </a>
   <ul class="nav-links">
     <li><a href="#about">about</a></li>
@@ -792,117 +751,113 @@ footer {
     <li><a href="#services">services</a></li>
     <li><a href="#contact">contact</a></li>
   </ul>
-  <a href="mailto:yemiadeyanju20@gmail.com" class="nav-cta">hire_me()</a>
-  <div class="hamburger" id="hamburger" onclick="toggleMobile()">
+  <a href="mailto:yemiadeyanju20@gmail.com" class="nav-cta">Hire Me</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
-<div class="wrap">
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMenu()">about</a>
+  <a href="#skills" onclick="closeMenu()">skills</a>
+  <a href="#projects" onclick="closeMenu()">projects</a>
+  <a href="#services" onclick="closeMenu()">services</a>
+  <a href="#contact" onclick="closeMenu()">contact</a>
+</div>
 
 <!-- ═══════════════════════════════════════
      HERO
 ═══════════════════════════════════════ -->
 <section id="hero">
-  <div class="hero-grid">
-    <div class="hero-left">
-      <div class="hero-badge">
-        <span class="pulse"></span>
-        OPEN TO OPPORTUNITIES
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse"></span>AVAILABLE FOR HIRE</div>
+    <div class="hero-grid">
+      <div>
+        <h1 class="hero-name" style="animation:fadeUp .8s .3s both">
+          Hi, I'm<br/>
+          <span class="gradient">Steve lee</span>
+        </h1>
+        <div class="hero-role" style="animation:fadeUp .8s .4s both">
+          <span id="typewriter"></span><span class="cursor">|</span>
+        </div>
+        <p class="hero-desc" style="animation:fadeUp .8s .5s both">
+          Python developer from Nigeria specializing in automation, Telegram bots, OSINT tools, and cybersecurity solutions. I turn ideas into deployable, real-world tools.
+        </p>
+        <div class="hero-btns" style="animation:fadeUp .8s .6s both">
+          <a href="#projects" class="btn-primary">View My Work ↓</a>
+          <a href="mailto:yemiadeyanju20@gmail.com" class="btn-secondary">Let's Talk →</a>
+        </div>
       </div>
-      <h1 class="hero-name">
-        Steve
-          <span class="line2">
-            <span class="filled">lee</span>
-        </span>
-      </h1>
-      <div class="hero-roles">
-        <span id="typewriter"></span><span class="tw-cursor">|</span>
-      </div>
-      <p class="hero-desc">Python developer from Nigeria crafting automation pipelines, OSINT bots, and cybersecurity tools — turning clever ideas into working, deployable solutions.</p>
-      <div class="hero-btns">
-        <a href="#projects" class="btn-primary">View My Work ↓</a>
-        <a href="mailto:yemiadeyanju20@gmail.com" class="btn-outline">Let's Talk →</a>
-        <a onclick="alert('Add your resume PDF link here!');return false" href="#" class="btn-outline" style="border-color:var(--g0);color:var(--g0)">📄 Resume</a>
+      <div style="animation:fadeUp .8s .7s both">
+        <div class="hero-panel">
+          <div class="panel-header">
+            <span class="panel-dot r"></span>
+            <span class="panel-dot y"></span>
+            <span class="panel-dot g"></span>
+            <span class="panel-title">steve@dev ~ ./profile.sh</span>
+          </div>
+          <div class="panel-body">
+            <span class="panel-line"><span class="panel-cm"># Developer profile loaded</span></span>
+            <span class="panel-line">&nbsp;</span>
+            <span class="panel-line">{</span>
+            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"name"</span>: <span class="panel-str">"Steve lee"</span>,</span>
+            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"role"</span>: <span class="panel-str">"Python Developer"</span>,</span>
+            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"location"</span>: <span class="panel-str">"Nigeria"</span>,</span>
+            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"stack"</span>: [<span class="panel-str">"Python"</span>, <span class="panel-str">"Automation"</span>, <span class="panel-str">"OSINT"</span>],</span>
+            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"available"</span>: <span class="panel-bool">true</span>,</span>
+            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"remote"</span>: <span class="panel-bool">true</span></span>
+            <span class="panel-line">}</span>
+            <span class="panel-line">&nbsp;</span>
+            <span class="panel-line"><span class="panel-kw">$</span> <span style="color:var(--accent);animation:blink 1s step-end infinite">_</span></span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-terminal">
-      <div class="term-bar">
-        <span class="term-dot r"></span>
-        <span class="term-dot y"></span>
-        <span class="term-dot g"></span>
-        <span class="term-title">steve@dev ~ python -c "import me"</span>
-      </div>
-      <div class="term-body">
-        <span class="t-row"><span class="tb"># Loading developer profile...</span></span>
-        <span class="t-row">&nbsp;</span>
-        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span class="tc">import</span><span class="ts"> lee</span></span>
-        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span class="tc">print</span><span class="ts">(lee.info())</span></span>
-        <span class="t-row">&nbsp;</span>
-        <span class="t-row"><span class="tb">{</span></span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"name"</span>: <span class="tv">"Steve lee"</span>,</span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"role"</span>: <span class="tv">"Python Developer"</span>,</span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"location"</span>: <span class="tv">"Nigeria 🇳🇬"</span>,</span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"stack"</span>: [<span class="tv">"Python"</span>, <span class="tv">"Bots"</span>, <span class="tv">"OSINT"</span>],</span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"available"</span>: <span style="color:#ff79c6">True</span>,</span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"coffee"</span>: <span style="color:#ff79c6">float</span>(<span class="tv">"inf"</span>)</span>
-        <span class="t-row"><span class="tb">}</span></span>
-        <span class="t-row">&nbsp;</span>
-        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span style="color:var(--g0); animation:blink 1s step-end infinite;">█</span></span>
-      </div>
+    <div class="hero-stats" style="animation:fadeUp .8s .8s both">
+      <div class="hero-stat"><span class="hero-stat-num">4+</span><span class="hero-stat-lbl">Projects Shipped</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3+</span><span class="hero-stat-lbl">Years Building</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-lbl">Remote Ready</span></div>
     </div>
-  </div>
-  <div class="hero-scroll">
-    <span>SCROLL</span>
-    <div class="scroll-line"></div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════
      ABOUT
 ═══════════════════════════════════════ -->
-<section id="about">
+<section id="about" class="section">
   <div class="container">
-    <div class="about-layout">
+    <div class="reveal-left">
+      <div class="section-label">// 01. about</div>
+      <h2 class="section-title">Building Real<br/>Solutions That Work</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
       <div class="reveal-left">
-        <p class="sec-eyebrow">// 01. about_me</p>
-        <h2 class="sec-title">Building Things<br/>That Actually Work</h2>
-        <div class="sec-rule"></div>
         <div class="about-text">
-          <p>I'm a <strong>self-taught Python developer</strong> from Nigeria with a hands-on approach to learning — I build to understand, and I understand to build better.</p>
-          <p>My work spans <strong>automation engineering</strong>, web scraping at scale, <strong>Telegram bot development</strong>, and cybersecurity tooling. Every project I ship starts as a real problem I wanted to solve.</p>
-          <p>I'm passionate about the intersection of <strong>automation and security</strong> — whether that's scraping data pipelines, building OSINT intelligence tools, or writing scripts that eliminate repetitive manual work.</p>
-          <p>Currently open to <strong>remote roles, freelance contracts, and collaborations</strong> where I can contribute meaningful work and keep growing.</p>
+          <p>I'm a <strong>self-taught Python developer</strong> from Nigeria who learns by building. Every project I ship starts as a real problem I wanted to solve — and ends as a working, deployable tool.</p>
+          <p>My work spans <strong>automation engineering</strong>, web scraping at scale, <strong>Telegram bot development</strong>, and cybersecurity tooling. I specialize in turning clever ideas into production-ready code.</p>
+          <p>I'm passionate about the intersection of <strong>automation and security</strong> — building OSINT intelligence tools, scraping pipelines, and scripts that eliminate manual work.</p>
+          <p>Currently open to <strong>remote roles, freelance contracts, and collaborations</strong> worldwide.</p>
         </div>
-        <div class="about-highlights">
-          <span class="hl-chip">Python</span>
-          <span class="hl-chip">Automation</span>
-          <span class="hl-chip">Telegram Bots</span>
-          <span class="hl-chip">OSINT</span>
-          <span class="hl-chip">Web Scraping</span>
-          <span class="hl-chip">Cybersecurity</span>
-          <span class="hl-chip">Nigeria 🇳🇬</span>
-          <span class="hl-chip">Remote-Ready</span>
+        <div class="about-chips">
+          <span class="chip">Python</span>
+          <span class="chip">Automation</span>
+          <span class="chip">Telegram Bots</span>
+          <span class="chip">OSINT</span>
+          <span class="chip">Web Scraping</span>
+          <span class="chip">Cybersecurity</span>
+          <span class="chip">Nigeria</span>
+          <span class="chip">Remote Ready</span>
         </div>
       </div>
       <div class="reveal-right">
-        <div class="about-stats stagger">
-          <div class="stat-card">
-            <span class="stat-num" data-target="4">0</span>
-            <span class="stat-lbl">PROJECTS SHIPPED</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-num" data-target="3">0</span>
-            <span class="stat-lbl">YEARS CODING</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-num">6+</span>
-            <span class="stat-lbl">SKILL DOMAINS</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-num">100%</span>
-            <span class="stat-lbl">REMOTE READY</span>
-          </div>
+        <div class="stats-grid stagger">
+          <div class="stat-box"><span class="stat-num"><span data-target="4">0</span><span class="plus">+</span></span><span class="stat-lbl">PROJECTS SHIPPED</span></div>
+          <div class="stat-box"><span class="stat-num"><span data-target="3">0</span><span class="plus">+</span></span><span class="stat-lbl">YEARS CODING</span></div>
+          <div class="stat-box"><span class="stat-num">6<span class="plus">+</span></span><span class="stat-lbl">SKILL DOMAINS</span></div>
+          <div class="stat-box"><span class="stat-num">100<span class="plus">%</span></span><span class="stat-lbl">REMOTE READY</span></div>
         </div>
       </div>
     </div>
@@ -912,89 +867,72 @@ footer {
 <!-- ═══════════════════════════════════════
      SKILLS
 ═══════════════════════════════════════ -->
-<section id="skills">
+<section id="skills" class="section">
   <div class="container">
     <div class="reveal">
-      <p class="sec-eyebrow">// 02. technical_skills</p>
-      <h2 class="sec-title">My Tech Stack</h2>
-      <div class="sec-rule"></div>
+      <div class="section-label">// 02. skills</div>
+      <h2 class="section-title">My Technical Stack</h2>
+      <div class="section-line"></div>
     </div>
-    <div class="skills-layout">
-      <div class="skill-categories stagger reveal-left">
+    <div class="skills-grid">
+      <div class="skill-cats stagger reveal-left">
         <div class="skill-cat">
-          <div class="cat-row"><span class="cat-ico">🐍</span><span class="cat-ttl">Python Development</span></div>
-          <div class="tags">
-            <span class="tag tg">Python 3</span><span class="tag tg">OOP</span><span class="tag tg">REST APIs</span><span class="tag tg">JSON/CSV</span><span class="tag tg">asyncio</span>
+          <div class="skill-cat-header"><span class="skill-cat-icon">🐍</span><span class="skill-cat-title">Python Development</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag st-blue">Python 3</span>
+            <span class="skill-tag st-blue">OOP</span>
+            <span class="skill-tag st-blue">REST APIs</span>
+            <span class="skill-tag st-blue">asyncio</span>
+            <span class="skill-tag st-blue">JSON/CSV</span>
           </div>
         </div>
         <div class="skill-cat">
-          <div class="cat-row"><span class="cat-ico">⚙️</span><span class="cat-ttl">Automation &amp; Scraping</span></div>
-          <div class="tags">
-            <span class="tag tc2">Selenium</span><span class="tag tc2">BeautifulSoup</span><span class="tag tc2">Requests</span><span class="tag tc2">Scrapy</span><span class="tag tc2">Scheduling</span>
+          <div class="skill-cat-header"><span class="skill-cat-icon">⚙️</span><span class="skill-cat-title">Automation & Scraping</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag st-green">Selenium</span>
+            <span class="skill-tag st-green">BeautifulSoup</span>
+            <span class="skill-tag st-green">Scrapy</span>
+            <span class="skill-tag st-green">Requests</span>
+            <span class="skill-tag st-green">Scheduling</span>
           </div>
         </div>
         <div class="skill-cat">
-          <div class="cat-row"><span class="cat-ico">🤖</span><span class="cat-ttl">Bot Development</span></div>
-          <div class="tags">
-            <span class="tag tg">Telegram Bot API</span><span class="tag tg">python-telegram-bot</span><span class="tag tg">Webhooks</span><span class="tag tg">Inline Keyboards</span>
+          <div class="skill-cat-header"><span class="skill-cat-icon">🤖</span><span class="skill-cat-title">Bot Development</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag st-blue">Telegram API</span>
+            <span class="skill-tag st-blue">python-telegram-bot</span>
+            <span class="skill-tag st-blue">Webhooks</span>
+            <span class="skill-tag st-blue">Inline Keyboards</span>
           </div>
         </div>
         <div class="skill-cat">
-          <div class="cat-row"><span class="cat-ico">🔐</span><span class="cat-ttl">Cybersecurity</span></div>
-          <div class="tags">
-            <span class="tag tp2">OSINT</span><span class="tag tp2">Recon</span><span class="tag tp2">Shodan API</span><span class="tag tp2">Port Scanning</span><span class="tag tp2">Vuln Testing</span>
+          <div class="skill-cat-header"><span class="skill-cat-icon">🔐</span><span class="skill-cat-title">Cybersecurity</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag st-purple">OSINT</span>
+            <span class="skill-tag st-purple">Recon</span>
+            <span class="skill-tag st-purple">Shodan API</span>
+            <span class="skill-tag st-purple">Port Scanning</span>
+            <span class="skill-tag st-purple">Vuln Testing</span>
           </div>
         </div>
         <div class="skill-cat">
-          <div class="cat-row"><span class="cat-ico">🛠️</span><span class="cat-ttl">Tools &amp; Platforms</span></div>
-          <div class="tags">
-            <span class="tag ta">Git</span><span class="tag ta">Linux</span><span class="tag ta">VS Code</span><span class="tag ta">Bash</span><span class="tag ta">Terminal</span>
+          <div class="skill-cat-header"><span class="skill-cat-icon">🛠️</span><span class="skill-cat-title">Tools & Platforms</span></div>
+          <div class="skill-tags">
+            <span class="skill-tag st-amber">Git</span>
+            <span class="skill-tag st-amber">Linux</span>
+            <span class="skill-tag st-amber">Bash</span>
+            <span class="skill-tag st-amber">VS Code</span>
+            <span class="skill-tag st-amber">Terminal</span>
           </div>
         </div>
       </div>
       <div class="skill-bars reveal-right" id="skill-bars">
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Python</span>
-            <span class="skill-bar-pct">88%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Automation / Web Scraping</span>
-            <span class="skill-bar-pct">85%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Telegram Bot Development</span>
-            <span class="skill-bar-pct">82%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">OSINT &amp; Cybersecurity Tools</span>
-            <span class="skill-bar-pct">78%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Linux / CLI</span>
-            <span class="skill-bar-pct">75%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-w="75"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">HTML / CSS / Web Basics</span>
-            <span class="skill-bar-pct">65%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-w="65"></div></div>
-        </div>
+        <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+        <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Automation / Scraping</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+        <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Telegram Bots</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div></div>
+        <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">OSINT / Security</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div></div>
+        <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Linux / CLI</span><span class="skill-bar-pct">75%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="75"></div></div></div>
+        <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">HTML / CSS / Web</span><span class="skill-bar-pct">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="65"></div></div></div>
       </div>
     </div>
   </div>
@@ -1003,165 +941,141 @@ footer {
 <!-- ═══════════════════════════════════════
      PROJECTS
 ═══════════════════════════════════════ -->
-<section id="projects">
+<section id="projects" class="section">
   <div class="container">
     <div class="reveal">
-      <p class="sec-eyebrow">// 03. projects</p>
-      <h2 class="sec-title">Things I've Built</h2>
-      <div class="sec-rule"></div>
+      <div class="section-label">// 03. projects</div>
+      <h2 class="section-title">Things I've Built</h2>
+      <div class="section-line"></div>
     </div>
     <div class="projects-grid stagger">
-
-      <!-- Featured -->
-      <div class="project-card featured reveal">
-        <div class="proj-content">
-          <div class="proj-header">
-            <span class="proj-num">FEATURED_PROJECT</span>
+      <div class="proj-card featured">
+        <div>
+          <div class="proj-top">
+            <span class="proj-num">★ FEATURED</span>
             <div class="proj-links">
               <a href="https://github.com/Adeyanju-Adeola24/cybersec-bot" class="proj-link" title="GitHub" target="_blank">⌥</a>
               <a href="https://github.com/Adeyanju-Adeola24/ghost-chat" class="proj-link" title="Live" target="_blank">↗</a>
             </div>
           </div>
           <h3 class="proj-title">OSINT Telegram Intelligence Bot</h3>
-          <p class="proj-desc">A full-featured, modular intelligence-gathering bot deployed on Telegram. Integrates multiple APIs to perform IP geolocation lookups, email breach detection via HaveIBeenPwned, username enumeration across 30+ platforms, WHOIS/DNS metadata extraction, and real-time network analysis. Built with async handlers, command routing, and rate-limit protection.</p>
+          <p class="proj-desc">Full-featured intelligence bot integrating IP geolocation, email breach detection (HaveIBeenPwned), username enumeration across 30+ platforms, WHOIS/DNS lookups, and real-time network analysis. Built with async handlers, command routing, and rate-limit protection.</p>
           <div class="proj-tags">
-            <span class="tag tg">Python</span>
-            <span class="tag tp2">OSINT</span>
-            <span class="tag tc2">Telegram Bot API</span>
-            <span class="tag tg">asyncio</span>
-            <span class="tag ta">HaveIBeenPwned</span>
-            <span class="tag tp2">Shodan</span>
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">OSINT</span>
+            <span class="proj-tag">Telegram API</span>
+            <span class="proj-tag">asyncio</span>
+            <span class="proj-tag">Shodan</span>
           </div>
-          <div class="proj-footer">
+          <div class="proj-foot">
             <div class="proj-status"><span class="dot"></span> ACTIVE</div>
-            <a href="https://github.com/Adeyanju-Adeola24/cybersec-bot" class="proj-arrow" target="_blank">SEE PROJECT →</a>
+            <a href="https://github.com/Adeyanju-Adeola24/cybersec-bot" class="proj-arrow" target="_blank">View Project →</a>
           </div>
         </div>
         <div class="proj-preview">
-          <div class="preview-code">
-            <span class="pc-line"><span class="pc-k">from</span> telegram <span class="pc-k">import</span> Update</span>
-            <span class="pc-line"><span class="pc-k">from</span> osint <span class="pc-k">import</span> IPLookup, BreachCheck</span>
-            <span class="pc-line">&nbsp;</span>
-            <span class="pc-line"><span class="pc-c"># /ip 8.8.8.8 → Country: US, ISP: Google</span></span>
-            <span class="pc-line"><span class="pc-k">async def</span> <span class="pc-f">cmd_ip</span>(update, ctx):</span>
-            <span class="pc-line">&nbsp;&nbsp;result = <span class="pc-k">await</span> IPLookup.fetch(ctx.args[0])</span>
-            <span class="pc-line">&nbsp;&nbsp;<span class="pc-k">await</span> update.message.reply_text(</span>
-            <span class="pc-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="pc-s">f"🌍 {result.country} | {result.isp}"</span></span>
-            <span class="pc-line">&nbsp;&nbsp;)</span>
-          </div>
+          <span class="code-cm"># /ip 8.8.8.8</span><br/>
+          <span class="code-kw">from</span> telegram <span class="code-kw">import</span> Update<br/>
+          <span class="code-kw">from</span> osint <span class="code-kw">import</span> IPLookup<br/>
+          <br/>
+          <span class="code-kw">async def</span> <span class="code-fn">cmd_ip</span>(update, ctx):<br/>
+          &nbsp;&nbsp;result = <span class="code-kw">await</span> IPLookup.fetch(ip)<br/>
+          &nbsp;&nbsp;<span class="code-kw">await</span> update.reply(<span class="code-str">f"🌍 {result}"</span>)<br/>
+          <br/>
+          <span class="code-op"># → Country: US · ISP: Google</span>
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="proj-header">
+      <div class="proj-card">
+        <div class="proj-top">
           <span class="proj-num">PROJECT_02</span>
           <div class="proj-links"><a href="https://github.com/Adeyanju-Adeola24/airdrop-farm" class="proj-link" title="GitHub" target="_blank">⌥</a></div>
-          </div>
-          <h3 class="proj-title">Automation Scripts Suite</h3>
-          <p class="proj-desc">A production collection of Python automation scripts: scraping pipelines with pagination + anti-ban logic, file system organizers, scheduled job runners, and bulk data processors. Exports to CSV/JSON/SQLite.</p>
-        <div class="proj-tags">
-          <span class="tag tg">Python</span>
-          <span class="tag tc2">BeautifulSoup</span>
-          <span class="tag tc2">Selenium</span>
-          <span class="tag tg">SQLite</span>
-          <span class="tag ta">Cron/Scheduler</span>
         </div>
-        <div class="proj-footer">
+        <h3 class="proj-title">Automation Scripts Suite</h3>
+        <p class="proj-desc">Production Python automation: scraping pipelines with pagination and anti-ban logic, file organizers, scheduled job runners, bulk data processors. Exports to CSV/JSON/SQLite.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">BeautifulSoup</span>
+          <span class="proj-tag">Selenium</span>
+          <span class="proj-tag">SQLite</span>
+        </div>
+        <div class="proj-foot">
           <div class="proj-status"><span class="dot"></span> COMPLETE</div>
-          <a href="https://github.com/Adeyanju-Adeola24/airdrop-farm" class="proj-arrow" target="_blank">SEE PROJECT →</a>
+          <a href="https://github.com/Adeyanju-Adeola24/airdrop-farm" class="proj-arrow" target="_blank">View →</a>
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="proj-header">
+      <div class="proj-card">
+        <div class="proj-top">
           <span class="proj-num">PROJECT_03</span>
           <div class="proj-links"><a href="https://github.com/Adeyanju-Adeola24" class="proj-link" title="GitHub" target="_blank">⌥</a></div>
-          </div>
-          <h3 class="proj-title">Cybersecurity Toolset CLI</h3>
-        <p class="proj-desc">A suite of CLI security tools: port scanner, basic brute-force simulator, subdomain enumerator, header analyzer, and a network information aggregator. Designed for ethical testing and security research.</p>
-        <div class="proj-tags">
-          <span class="tag tp2">Security</span>
-          <span class="tag tg">Python</span>
-          <span class="tag tp2">Socket</span>
-          <span class="tag tc2">CLI/argparse</span>
-          <span class="tag ta">Networking</span>
         </div>
-        <div class="proj-footer">
+        <h3 class="proj-title">Cybersecurity Toolset CLI</h3>
+        <p class="proj-desc">A CLI suite of security tools: port scanner, subdomain enumerator, header analyzer, brute-force simulator, and network info aggregator. For ethical testing and research.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Security</span>
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Socket</span>
+          <span class="proj-tag">Networking</span>
+        </div>
+        <div class="proj-foot">
           <div class="proj-status"><span class="dot"></span> COMPLETE</div>
-          <a href="https://github.com/Adeyanju-Adeola24" class="proj-arrow" target="_blank">SEE PROJECT →</a>
+          <a href="https://github.com/Adeyanju-Adeola24" class="proj-arrow" target="_blank">View →</a>
         </div>
       </div>
 
-      <div class="project-card reveal">
-        <div class="proj-header">
+      <div class="proj-card">
+        <div class="proj-top">
           <span class="proj-num">PROJECT_04</span>
           <div class="proj-links"><a href="https://github.com/Adeyanju-Adeola24" class="proj-link" title="GitHub" target="_blank">⌥</a></div>
-          </div>
-          <h3 class="proj-title">Multi-Source Scraping Pipeline</h3>
-        <p class="proj-desc">A scalable, concurrent scraping pipeline handling dynamic JavaScript-rendered pages, rotating user agents, and retry logic. Outputs structured data to multiple formats with data validation and deduplication.</p>
-        <div class="proj-tags">
-          <span class="tag tc2">Scrapy</span>
-          <span class="tag tg">Python</span>
-          <span class="tag tc2">Selenium</span>
-          <span class="tag tg">Pandas</span>
-          <span class="tag ta">Proxies</span>
         </div>
-        <div class="proj-footer">
+        <h3 class="proj-title">Multi-Source Scraping Pipeline</h3>
+        <p class="proj-desc">Concurrent scraping pipeline handling dynamic JS-rendered pages with rotating user agents, retry logic, proxy support, and data validation. Outputs structured, deduplicated data.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Scrapy</span>
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Selenium</span>
+          <span class="proj-tag">Proxies</span>
+        </div>
+        <div class="proj-foot">
           <div class="proj-status"><span class="dot"></span> COMPLETE</div>
-          <a href="https://github.com/Adeyanju-Adeola24" class="proj-arrow" target="_blank">SEE PROJECT →</a>
+          <a href="https://github.com/Adeyanju-Adeola24" class="proj-arrow" target="_blank">View →</a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════
-     EXPERIENCE / LEARNING JOURNEY
+     EXPERIENCE
 ═══════════════════════════════════════ -->
-<section id="experience">
+<section id="experience" class="section">
   <div class="container">
     <div class="reveal">
-      <p class="sec-eyebrow">// 04. journey</p>
-      <h2 class="sec-title">Learning Journey</h2>
-      <div class="sec-rule"></div>
+      <div class="section-label">// 04. journey</div>
+      <h2 class="section-title">My Learning Path</h2>
+      <div class="section-line"></div>
     </div>
     <div class="timeline reveal">
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-date">2024 — PRESENT</div>
+        <div class="tl-date">2024 — Present</div>
         <div class="tl-title">Advanced Projects & OSINT Specialization</div>
-        <div class="tl-place">Self-Directed / Independent</div>
-        <p class="tl-desc">Built and deployed production-grade Telegram OSINT bot integrating multiple security APIs. Expanded into async Python, concurrent scraping architectures, and cybersecurity tooling. Focusing on real-world deployable tools.</p>
-        <div class="tl-tags">
-          <span class="tag tg">asyncio</span>
-          <span class="tag tp2">OSINT</span>
-          <span class="tag tc2">API Integration</span>
-        </div>
+        <div class="tl-place">Self-Directed</div>
+        <p class="tl-desc">Built and deployed production-grade Telegram OSINT bot. Expanded into async Python, concurrent scraping, and cybersecurity tooling. Focused on real-world deployable tools.</p>
       </div>
       <div class="tl-item">
-        <div class="tl-dot" style="background:var(--c0); box-shadow: 0 0 12px var(--c0)"></div>
+        <div class="tl-dot" style="background:var(--green);box-shadow:0 0 0 3px var(--green)"></div>
         <div class="tl-date">2023</div>
         <div class="tl-title">Automation & Bot Development</div>
-        <div class="tl-place">Self-Directed / Online Resources</div>
-        <p class="tl-desc">Mastered web scraping with BeautifulSoup and Selenium. Developed first complete Telegram bots with command handlers and API integrations. Built automation scripts for real productivity use cases.</p>
-        <div class="tl-tags">
-          <span class="tag tc2">BeautifulSoup</span>
-          <span class="tag tg">Telegram Bot API</span>
-          <span class="tag ta">Selenium</span>
-        </div>
+        <div class="tl-place">Self-Directed</div>
+        <p class="tl-desc">Mastered Selenium and BeautifulSoup. Built complete Telegram bots with command handlers and API integrations. Developed automation scripts for real productivity use cases.</p>
       </div>
       <div class="tl-item">
-        <div class="tl-dot" style="background:var(--amber); box-shadow: 0 0 12px var(--amber)"></div>
+        <div class="tl-dot" style="background:var(--amber);box-shadow:0 0 0 3px var(--amber)"></div>
         <div class="tl-date">2022</div>
         <div class="tl-title">Python Fundamentals & Cybersecurity Basics</div>
-        <div class="tl-place">Self-Taught — YouTube, Documentation, Projects</div>
-        <p class="tl-desc">Started Python journey from zero. Learned programming fundamentals, data structures, file I/O, and basic networking concepts. First exposure to ethical hacking concepts and Linux terminal.</p>
-        <div class="tl-tags">
-          <span class="tag tg">Python 3</span>
-          <span class="tag ta">Linux</span>
-          <span class="tag tp2">Networking Basics</span>
-        </div>
+        <div class="tl-place">Self-Taught</div>
+        <p class="tl-desc">Started Python journey from zero. Learned programming fundamentals, data structures, file I/O, networking concepts, and ethical hacking basics.</p>
       </div>
     </div>
   </div>
@@ -1170,44 +1084,44 @@ footer {
 <!-- ═══════════════════════════════════════
      SERVICES
 ═══════════════════════════════════════ -->
-<section id="services">
+<section id="services" class="section" style="background:var(--bg2)">
   <div class="container">
     <div class="reveal">
-      <p class="sec-eyebrow">// 05. what_i_offer</p>
-      <h2 class="sec-title">Services I Provide</h2>
-      <div class="sec-rule"></div>
+      <div class="section-label">// 05. services</div>
+      <h2 class="section-title">What I Offer</h2>
+      <div class="section-line"></div>
     </div>
-    <div class="services-grid stagger reveal">
-      <div class="service-card">
+    <div class="services-grid stagger">
+      <div class="svc-card">
         <span class="svc-icon">🤖</span>
         <div class="svc-title">Telegram Bot Development</div>
-        <p class="svc-desc">Custom bots for businesses, communities, and automation — from simple command bots to complex multi-feature platforms.</p>
+        <p class="svc-desc">Custom bots for businesses, communities, and automation — from simple commands to complex multi-feature platforms.</p>
         <ul class="svc-list">
-          <li>Command + inline keyboard bots</li>
+          <li>Command & inline keyboards</li>
           <li>API-integrated data bots</li>
-          <li>Notification & alert bots</li>
-          <li>Admin panel & user management</li>
+          <li>Alerts & notifications</li>
+          <li>User management systems</li>
         </ul>
       </div>
-      <div class="service-card">
+      <div class="svc-card">
         <span class="svc-icon">⚙️</span>
         <div class="svc-title">Python Automation</div>
-        <p class="svc-desc">Eliminate repetitive tasks and manual workflows with reliable Python automation scripts tailored to your needs.</p>
+        <p class="svc-desc">Eliminate manual workflows with reliable Python automation scripts tailored to your specific needs.</p>
         <ul class="svc-list">
-          <li>Web scraping &amp; data collection</li>
-          <li>File &amp; folder automation</li>
-          <li>Report generation scripts</li>
+          <li>Web scraping & data collection</li>
+          <li>File & folder automation</li>
+          <li>Report generation</li>
           <li>Scheduled job runners</li>
         </ul>
       </div>
-      <div class="service-card">
+      <div class="svc-card">
         <span class="svc-icon">🔍</span>
-        <div class="svc-title">OSINT &amp; Recon Tools</div>
+        <div class="svc-title">OSINT & Recon Tools</div>
         <p class="svc-desc">Custom intelligence-gathering tools for security research, background checking, and information aggregation.</p>
         <ul class="svc-list">
-          <li>IP / Domain investigation tools</li>
-          <li>Email breach checker integrations</li>
-          <li>Username enumeration scripts</li>
+          <li>IP / Domain investigation</li>
+          <li>Email breach checking</li>
+          <li>Username enumeration</li>
           <li>Custom recon frameworks</li>
         </ul>
       </div>
@@ -1216,483 +1130,214 @@ footer {
 </section>
 
 <!-- ═══════════════════════════════════════
-     INTERACTIVE TERMINAL
-═══════════════════════════════════════ -->
-<section id="terminal-sec">
-  <div class="container">
-    <div class="reveal">
-      <p class="sec-eyebrow">// 06. try_it</p>
-      <h2 class="sec-title">Interactive Profile</h2>
-      <div class="sec-rule"></div>
-    </div>
-    <div class="terminal-outer reveal">
-      <div class="t-header">
-        <span class="term-dot r"></span>
-        <span class="term-dot y"></span>
-        <span class="term-dot g"></span>
-        <span class="t-header-title">lee@portfolio:~$ — type 'help' to start</span>
-      </div>
-      <div class="t-content" id="t-output">
-        <span style="display:block;color:var(--g0)">Welcome to lee's interactive profile terminal.</span>
-        <span style="display:block;color:var(--txt-dim)">Type <span style="color:var(--c0)">help</span> to see available commands.</span>
-        <span style="display:block">&nbsp;</span>
-      </div>
-      <div class="t-input-row">
-        <span class="t-prompt-lbl">lee@portfolio:~$&nbsp;</span>
-        <input type="text" id="terminal-input" placeholder="type a command..." autocomplete="off" spellcheck="false"/>
-      </div>
-      <div class="t-hint">try: help · about · skills · projects · contact · whoami · sudo · matrix · hack · coffee · clear</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════
      CONTACT
 ═══════════════════════════════════════ -->
-<section id="contact">
+<section id="contact" class="section">
   <div class="container">
     <div class="reveal">
-      <p class="sec-eyebrow">// 07. contact</p>
-      <h2 class="sec-title">Let's Work Together</h2>
-      <div class="sec-rule"></div>
+      <div class="section-label">// 06. contact</div>
+      <h2 class="section-title">Let's Work Together</h2>
+      <div class="section-line"></div>
     </div>
-    <div class="contact-layout">
+    <div class="contact-grid">
       <div class="reveal-left">
-        <p class="contact-intro">Have a project in mind? Need a bot, automation script, or OSINT tool built? I'm available for freelance work, remote contracts, and long-term collaborations. Let's talk.</p>
+        <p class="contact-intro">Need a bot, automation script, or OSINT tool? I'm available for freelance work, remote contracts, and collaborations worldwide.</p>
         <div class="contact-items">
-          <a href="https://github.com/Adeyanju-Adeola24" class="c-item" target="_blank">
-            <span class="c-ico">⌥</span>
-            <div class="c-detail">
-              <span class="c-lbl">GITHUB</span>
-              <span class="c-val">@Adeyanju-Adeola24</span>
-            </div>
-          </a>
           <a href="mailto:yemiadeyanju20@gmail.com" class="c-item">
-            <span class="c-ico">✉️</span>
-            <div class="c-detail">
-              <span class="c-lbl">EMAIL</span>
-              <span class="c-val">yemiadeyanju20@gmail.com</span>
-            </div>
+            <span class="ico">✉️</span>
+            <div><span class="lbl">EMAIL</span><span class="val">yemiadeyanju20@gmail.com</span></div>
           </a>
           <a href="tel:+2348141577447" class="c-item">
-            <span class="c-ico">📞</span>
-            <div class="c-detail">
-              <span class="c-lbl">PHONE / WHATSAPP</span>
-              <span class="c-val">+234 814 157 7447</span>
-            </div>
+            <span class="ico">📞</span>
+            <div><span class="lbl">PHONE / WHATSAPP</span><span class="val">+234 814 157 7447</span></div>
           </a>
-          <div class="c-item" style="cursor:default;">
-            <span class="c-ico">📍</span>
-            <div class="c-detail">
-              <span class="c-lbl">LOCATION</span>
-              <span class="c-val">Nigeria 🇳🇬 — Remote Worldwide</span>
-            </div>
-          </div>
-          <div class="c-item" style="cursor:default;">
-            <span class="c-ico">⏰</span>
-            <div class="c-detail">
-              <span class="c-lbl">RESPONSE TIME</span>
-              <span class="c-val">Usually within 24 hours</span>
-            </div>
+          <a href="https://github.com/Adeyanju-Adeola24" class="c-item" target="_blank">
+            <span class="ico">⌥</span>
+            <div><span class="lbl">GITHUB</span><span class="val">@Adeyanju-Adeola24</span></div>
+          </a>
+          <div class="c-item" style="cursor:default">
+            <span class="ico">🌍</span>
+            <div><span class="lbl">LOCATION</span><span class="val">Nigeria — Remote Worldwide</span></div>
           </div>
         </div>
       </div>
       <div class="reveal-right">
-        <form class="contact-form" id="contact-form" onsubmit="handleForm(event)">
+        <form class="contact-form" id="contact-form">
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">NAME *</label>
-              <input type="text" class="form-input" placeholder="Your name" required/>
+              <input type="text" class="form-input" name="name" placeholder="Your name" required />
             </div>
             <div class="form-group">
               <label class="form-label">EMAIL *</label>
-              <input type="email" class="form-input" placeholder="your@email.com" required/>
+              <input type="email" class="form-input" name="email" placeholder="your@email.com" required />
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">SUBJECT</label>
-            <input type="text" class="form-input" placeholder="Project inquiry, job offer..."/>
+            <input type="text" class="form-input" name="subject" placeholder="Project inquiry, job offer..." />
           </div>
           <div class="form-group">
             <label class="form-label">MESSAGE *</label>
-            <textarea class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+            <textarea class="form-textarea" name="message" placeholder="Tell me about your project..." required></textarea>
           </div>
           <button type="submit" class="form-submit">
-            <span id="submit-text">SEND MESSAGE →</span>
+            <span id="submit-text">Send Message →</span>
           </button>
-          <p id="form-msg" style="color:var(--g0)"></p>
+          <p id="form-msg"></p>
         </form>
       </div>
     </div>
   </div>
 </section>
 
-</div><!-- /wrap -->
-
+<!-- Footer -->
 <footer>
-  <div class="footer-logo">_lee.dev</div>
-  <div class="footer-copy">© 2025 Steve lee · Built with Python passion 🐍</div>
-  <a href="#hero" class="back-top">BACK TO TOP ↑</a>
+  <div class="footer-logo"><span>_</span>lee.dev</div>
+  <div class="footer-copy">© 2025 Steve lee · Built with Python & ☕</div>
+  <div class="footer-links">
+    <a href="https://github.com/Adeyanju-Adeola24" target="_blank" title="GitHub">⌥</a>
+    <a href="mailto:yemiadeyanju20@gmail.com" title="Email">✉</a>
+    <a href="tel:+2348141577447" title="Phone">📞</a>
+  </div>
 </footer>
 
-<!-- ════════════════════════════════════
+<!-- ═══════════════════════════════════════
      SCRIPTS
-════════════════════════════════════ -->
+═══════════════════════════════════════ -->
 <script>
-/* ── LOADER ── */
-(function(){
-  const bar = document.getElementById('loader-bar');
-  const pct = document.getElementById('loader-pct');
-  let p = 0;
-  const iv = setInterval(() => {
-    p += Math.random() * 18;
-    if (p >= 100) { p = 100; clearInterval(iv); }
-    bar.style.width = p + '%';
-    pct.textContent = Math.floor(p) + '%';
-    if (p === 100) setTimeout(() => document.getElementById('loader').classList.add('hidden'), 400);
-  }, 80);
-})();
+// Loader
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 600);
+});
 
-/* ── CUSTOM CURSOR ── */
-const dot  = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
+// Cursor
+const dot = document.querySelector('.cursor-dot');
+const ring = document.querySelector('.cursor-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
 document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-(function animCursor(){
+(function anim(){
   rx += (mx - rx) * .15;
   ry += (my - ry) * .15;
-  dot.style.left  = mx + 'px'; dot.style.top  = my + 'px';
-  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-  requestAnimationFrame(animCursor);
+  if(dot){dot.style.left = mx + 'px';dot.style.top = my + 'px'}
+  if(ring){ring.style.left = rx + 'px';ring.style.top = ry + 'px'}
+  requestAnimationFrame(anim);
 })();
-document.querySelectorAll('a, button, .project-card, .stat-card, .skill-cat, .service-card, .c-item, input, textarea').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+document.querySelectorAll('a,button,.proj-card,.stat-box,.skill-cat,.svc-card,.c-item').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hover'));
 });
 
-/* ── CURSOR TRAIL PARTICLES ── */
-(function(){
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9997';
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-  document.addEventListener('mousemove', e => {
-    particles.push({ x: e.clientX, y: e.clientY, life: 1 });
-    if (particles.length > 30) particles.shift();
-  });
-  function drawParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles = particles.filter(p => p.life > 0);
-    particles.forEach(p => {
-      p.life -= 0.025;
-      p.y -= 0.3;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.life * 4, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(0,255,136,${p.life * 0.4})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(drawParticles);
-  }
-  drawParticles();
-})();
-
-/* ── MATRIX CANVAS ── */
-(function(){
-  const c = document.getElementById('matrix-canvas');
-  const ctx = c.getContext('2d');
-  let W, H, cols, drops;
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*<>[]{}|/\\アイウエオカキクケコ';
-  const fs = 13;
-  function init() {
-    W = c.width = window.innerWidth;
-    H = c.height = window.innerHeight;
-    cols = Math.floor(W / fs);
-    drops = Array(cols).fill(1);
-  }
-  init();
-  window.addEventListener('resize', init);
-  setInterval(() => {
-    ctx.fillStyle = 'rgba(3,6,13,.05)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#00ff88';
-    ctx.font = fs + 'px monospace';
-    drops.forEach((y, i) => {
-      const ch = chars[Math.floor(Math.random() * chars.length)];
-      ctx.globalAlpha = Math.random() * .7 + .1;
-      ctx.fillText(ch, i * fs, y * fs);
-      ctx.globalAlpha = 1;
-      if (y * fs > H && Math.random() > .975) drops[i] = 0;
-      drops[i]++;
-    });
-  }, 50);
-})();
-
-/* ── NAV SCROLL ── */
-const navbar = document.getElementById('navbar');
-const progressBar = document.getElementById('progress-bar');
+// Progress
+const progress = document.getElementById('progress');
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-  updateActiveNav();
-  // Progress bar
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = docHeight > 0 ? (scrollTop / docHeight) * 100 + '%' : '0';
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = h > 0 ? (window.scrollY / h) * 100 + '%' : '0';
 });
 
-/* ── ACTIVE NAV ── */
-function updateActiveNav() {
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  updateActive();
+});
+
+// Active nav link
+function updateActive(){
   const sections = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a');
   let current = '';
-  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
-  links.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 200) current = s.id; });
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
 }
 
-/* ── MOBILE NAV ── */
-function toggleMobile() {
+// Mobile menu
+function toggleMenu(){
   document.getElementById('mobile-menu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
 }
-function closeMobile() {
+function closeMenu(){
   document.getElementById('mobile-menu').classList.remove('open');
   document.getElementById('hamburger').classList.remove('open');
 }
 
-/* ── TYPEWRITER ── */
-const phrases = ['Python Developer', 'Automation Engineer', 'Telegram Bot Builder', 'OSINT Researcher', 'Cybersecurity Enthusiast'];
-let pi = 0, ci = 0, del = false;
+// Typewriter
+const roles = ['Python Developer', 'Automation Engineer', 'Telegram Bot Builder', 'OSINT Researcher', 'Cybersecurity Enthusiast'];
+let ri = 0, ci = 0, del = false;
 const tw = document.getElementById('typewriter');
-function type() {
-  const phrase = phrases[pi];
-  if (!del) {
-    ci++; tw.textContent = phrase.slice(0, ci);
-    if (ci === phrase.length) { del = true; setTimeout(type, 2000); return; }
-    setTimeout(type, 75);
+function type(){
+  const p = roles[ri];
+  if(!del){
+    ci++; tw.textContent = p.slice(0, ci);
+    if(ci === p.length){ del = true; setTimeout(type, 2000); return; }
+    setTimeout(type, 80);
   } else {
-    ci--; tw.textContent = phrase.slice(0, ci);
-    if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; setTimeout(type, 300); return; }
+    ci--; tw.textContent = p.slice(0, ci);
+    if(ci === 0){ del = false; ri = (ri + 1) % roles.length; setTimeout(type, 300); return; }
     setTimeout(type, 40);
   }
 }
-setTimeout(type, 1800);
+setTimeout(type, 1200);
 
-/* ── SCROLL REVEAL ── */
+// Scroll reveal
 const revealed = new Set();
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting && !revealed.has(e.target)) {
+    if(e.isIntersecting && !revealed.has(e.target)){
       revealed.add(e.target);
       e.target.classList.add('visible');
-      // Skill bars
-      if (e.target.id === 'skill-bars' || e.target.closest('#skill-bars')) animateBars();
-      // Count up
-      e.target.querySelectorAll('[data-target]').forEach(animCount);
+      if(e.target.querySelector('#skill-bars') || e.target.id === 'skill-bars') animateBars();
+      e.target.querySelectorAll('[data-target]').forEach(countUp);
     }
   });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger, #skill-bars').forEach(el => observer.observe(el));
+}, { threshold: .12 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger,#skill-bars').forEach(el => observer.observe(el));
 
-/* ── SKILL BARS ── */
-let barsAnimated = false;
-function animateBars() {
-  if (barsAnimated) return; barsAnimated = true;
-  document.querySelectorAll('.skill-bar-fill').forEach((bar, i) => {
-    setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, i * 100);
+// Skill bars
+let barsDone = false;
+function animateBars(){
+  if(barsDone) return; barsDone = true;
+  document.querySelectorAll('.skill-bar-fill').forEach((b, i) => {
+    setTimeout(() => { b.style.width = b.dataset.w + '%'; }, i * 120);
   });
 }
 
-/* ── COUNT UP ── */
-function animCount(el) {
-  const target = +el.dataset.target;
-  let cur = 0;
-  const step = target / 40;
+// Count up
+function countUp(el){
+  const t = +el.dataset.target;
+  let c = 0;
+  const s = t / 40;
   const iv = setInterval(() => {
-    cur += step;
-    if (cur >= target) { cur = target; clearInterval(iv); }
-    el.textContent = Math.floor(cur) + '+';
+    c += s;
+    if(c >= t){ c = t; clearInterval(iv); }
+    el.textContent = Math.floor(c);
   }, 35);
 }
 
-/* ── LIVE TERMINAL CLOCK ── */
-(function(){
-  const h = document.querySelector('.t-header-title');
-  if(h) setInterval(() => {
-    const d = new Date();
-    h.textContent = `lee@portfolio:~$ — ` + d.toLocaleTimeString('en-US',{hour12:false});
-  }, 1000);
-})();
-
-/* ── CARD 3D TILT ── */
-document.querySelectorAll('.project-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - .5;
-    const y = (e.clientY - r.top)  / r.height - .5;
-    card.style.transform = `perspective(800px) rotateY(${x*8}deg) rotateX(${-y*8}deg) translateY(-4px)`;
-  });
-  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-});
-
-/* ── INTERACTIVE TERMINAL ── */
-const commands = {
-  help: () => [
-    '<span style="color:var(--c0)">Available commands:</span>',
-    '  <span style="color:var(--g0)">about</span>     — Who is lee?',
-    '  <span style="color:var(--g0)">skills</span>    — Technical skills list',
-    '  <span style="color:var(--g0)">projects</span>  — View projects',
-    '  <span style="color:var(--g0)">contact</span>   — Contact information',
-    '  <span style="color:var(--g0)">whoami</span>    — Quick identity check',
-    '  <span style="color:var(--g0)">sudo</span>      — Try it 😏',
-    '  <span style="color:var(--g0)">matrix</span>    — Elevate the matrix',
-    '  <span style="color:var(--g0)">hack</span>      — Feel like a hacker',
-    '  <span style="color:var(--g0)">coffee</span>    — ☕',
-    '  <span style="color:var(--g0)">clear</span>     — Clear terminal',
-  ],
-  about: () => [
-    '<span style="color:var(--g0)">Steve lee</span> — Python Developer & Automation Engineer',
-    '📍 Location   : Nigeria',
-    '💼 Focus      : Automation, Bots, OSINT, Cybersecurity',
-    '📚 Learning   : Self-taught since 2022',
-    '🌐 Available  : Remote worldwide',
-    '☕ Fun fact   : Debugging at 2am is peak productivity',
-  ],
-  skills: () => [
-    '<span style="color:var(--c0)">Core skills:</span>',
-    '  🐍 Python 3, asyncio, OOP, REST APIs',
-    '  🤖 Telegram Bot API, python-telegram-bot',
-    '  ⚙️ Selenium, BeautifulSoup, Scrapy, Requests',
-    '  🔐 OSINT, Port Scanning, Vuln Testing, Shodan',
-    '  🛠️ Git, Linux, VS Code, Bash, Terminal',
-  ],
-  projects: () => [
-    '<span style="color:var(--c0)">My projects:</span>',
-    '  [1] OSINT Telegram Intelligence Bot',
-    '      → IP lookup, breach check, username search',
-    '  [2] Automation Scripts Suite',
-    '      → Scraping, file automation, scheduling',
-    '  [3] Cybersecurity Toolset CLI',
-    '      → Port scanner, recon tools, vuln analyzer',
-    '  [4] Multi-Source Scraping Pipeline',
-    '      → Concurrent scraper with proxy support',
-  ],
-  contact: () => [
-    '<span style="color:var(--c0)">Reach me:</span>',
-    '  📧 Email   : yemiadeyanju20@gmail.com',
-    '  📞 Phone   : +234 814 157 7447',
-    '  💬 WhatsApp: +234 814 157 7447',
-    '  ⏰ Response: Usually within 24 hours',
-  ],
-  hire: () => [
-    '<span style="color:var(--g0)">How to hire lee:</span>',
-    '  1. Send an email to yemiadeyanju20@gmail.com',
-    '  2. Describe your project / role',
-    '  3. I\'ll respond within 24 hours',
-    '  4. We discuss scope, timeline & rate',
-    '  5. 🚀 Let\'s build something great!',
-  ],
-  whoami: () => [
-    '<span style="color:var(--g0)">lee</span> — Python Developer from Nigeria 🇳🇬',
-    'uid=1337(lee) groups=developers,builders,hackers',
-  ],
-  sudo: () => [
-    '<span style="color:var(--r0)">[sudo] password for lee:</span>',
-    '<span style="color:var(--g0)">Nice try. You are already root in this terminal. 🤝</span>',
-  ],
-  matrix: () => {
-    document.querySelector('#matrix-canvas').style.opacity = '.25';
-    return ['<span style="color:var(--g0)">Matrix intensity increased. Welcome to the real world.</span>'];
-  },
-  hack: () => [
-    '<span style="color:var(--r0)">Initializing hack sequence...</span>',
-    '<span style="color:var(--c0)">  └─ Scanning ports............................ DONE</span>',
-    '<span style="color:var(--c0)">  └─ Bypassing firewall....................... DONE</span>',
-    '<span style="color:var(--c0)">  └─ Injecting payload........................ DONE</span>',
-    '<span style="color:var(--g0)">✅ Access granted. (This is just for show. 😄)</span>',
-  ],
-  coffee: () => [
-    '<span style="color:var(--amber)">☕ Brewing your coffee...</span>',
-    '<span style="color:var(--g0)">Coffee ready! Type "ls" to see what\'s next.</span>',
-  ],
-  ls: () => [
-    '<span style="color:var(--c0)">.</span>  <span style="color:var(--c0)">..</span>  <span style="color:var(--g0)">about</span>  <span style="color:var(--g0)">skills</span>  <span style="color:var(--g0)">projects</span>  <span style="color:var(--g0)">contact</span>  <span style="color:var(--amber)">coffee</span>',
-  ],
-  clear: () => null,
-};
-
-const output = document.getElementById('t-output');
-const input = document.getElementById('terminal-input');
-
-input.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  const cmd = input.value.trim().toLowerCase();
-  if (!cmd) return;
-  input.value = '';
-
-  const echo = document.createElement('span');
-  echo.style.display = 'block';
-  echo.innerHTML = `<span style="color:var(--g0)">lee@portfolio:~$</span> <span style="color:#fff">${cmd}</span>`;
-  output.appendChild(echo);
-
-  if (cmd === 'clear') {
-    output.innerHTML = '';
-    return;
-  }
-
-  const fn = commands[cmd];
-  if (fn) {
-    const lines = fn();
-    if (lines) {
-      lines.forEach(line => {
-        const el = document.createElement('span');
-        el.style.display = 'block';
-        el.style.color = 'var(--txt-dim)';
-        el.style.paddingLeft = '.5rem';
-        el.innerHTML = line;
-        output.appendChild(el);
-      });
-    }
-  } else {
-    const err = document.createElement('span');
-    err.style.display = 'block';
-    err.style.color = 'var(--r0)';
-    err.innerHTML = `  command not found: <span style="color:#fff">${cmd}</span>. Try <span style="color:var(--c0)">help</span>`;
-    output.appendChild(err);
-  }
-
-  const gap = document.createElement('span');
-  gap.style.display = 'block';
-  output.appendChild(gap);
-  output.scrollTop = output.scrollHeight;
-});
-
-/* ── CONTACT FORM ── */
-function handleForm(e) {
+// Contact form
+document.getElementById('contact-form').addEventListener('submit', function(e){
   e.preventDefault();
   const btn = document.getElementById('submit-text');
   const msg = document.getElementById('form-msg');
-  const form = e.target;
-  const data = new FormData(form);
-  btn.textContent = 'SENDING...';
+  const data = new FormData(this);
+  btn.textContent = 'Sending...';
+  msg.style.color = 'var(--text2)';
   fetch('https://formspree.io/f/xjkyqyqg', {
-    method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+    method: 'POST', body: data, headers: { Accept: 'application/json' }
   }).then(r => {
-    if (r.ok) {
-      btn.textContent = '✓ SENT!';
-      msg.textContent = '✓ Message delivered. lee will reply within 24 hours.';
-      form.reset();
-    } else {
-      throw new Error('Failed');
-    }
+    if(r.ok){
+      btn.textContent = '✓ Sent!';
+      msg.textContent = '✓ Thanks! I\'ll reply within 24 hours.';
+      msg.style.color = 'var(--green)';
+      this.reset();
+    } else throw new Error();
   }).catch(() => {
-    btn.textContent = 'SEND MESSAGE →';
-    msg.textContent = '✗ Send failed. Email lee directly: yemiadeyanju20@gmail.com';
+    btn.textContent = 'Send Message →';
+    msg.innerHTML = '✗ Send failed. Email me directly: yemiadeyanju20@gmail.com';
+    msg.style.color = 'var(--red)';
   });
-  setTimeout(() => { btn.textContent = 'SEND MESSAGE →'; msg.textContent = ''; }, 4000);
-}
+  setTimeout(() => { btn.textContent = 'Send Message →'; msg.textContent = ''; }, 5000);
+});
 </script>
 </body>
 </html>
