@@ -663,6 +663,7 @@ footer{
 ═══════════════════════════════════════ */
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes blink{50%{opacity:0}}
+@keyframes pulseCursor{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -687,8 +688,10 @@ footer{
 ═══════════════════════════════════════ */
 @media(max-width:960px){
   .hero-grid{grid-template-columns:1fr;gap:32px}
-  .hero-panel{display:none}
+  .hero-panel{max-width:100%}
   .hero-stats{grid-template-columns:repeat(3,1fr)}
+  .cursor-dot,.cursor-ring{display:none}
+  #loader .loader-ring{display:block}
   .about-grid{grid-template-columns:1fr;gap:40px}
   .skills-grid{grid-template-columns:1fr;gap:32px}
   .services-grid{grid-template-columns:repeat(2,1fr)}
@@ -798,20 +801,7 @@ footer{
             <span class="panel-dot g"></span>
             <span class="panel-title">steve@dev ~ ./profile.sh</span>
           </div>
-          <div class="panel-body">
-            <span class="panel-line"><span class="panel-cm"># Developer profile loaded</span></span>
-            <span class="panel-line">&nbsp;</span>
-            <span class="panel-line">{</span>
-            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"name"</span>: <span class="panel-str">"Steve lee"</span>,</span>
-            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"role"</span>: <span class="panel-str">"Python Developer"</span>,</span>
-            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"location"</span>: <span class="panel-str">"Nigeria"</span>,</span>
-            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"stack"</span>: [<span class="panel-str">"Python"</span>, <span class="panel-str">"Automation"</span>, <span class="panel-str">"OSINT"</span>],</span>
-            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"available"</span>: <span class="panel-bool">true</span>,</span>
-            <span class="panel-line">&nbsp;&nbsp;<span class="panel-json">"remote"</span>: <span class="panel-bool">true</span></span>
-            <span class="panel-line">}</span>
-            <span class="panel-line">&nbsp;</span>
-            <span class="panel-line"><span class="panel-kw">$</span> <span style="color:var(--accent);animation:blink 1s step-end infinite">_</span></span>
-          </div>
+          <div class="panel-body" id="terminal"><span class="panel-line"><span class="term-cursor">_</span></span></div>
         </div>
       </div>
     </div>
@@ -1194,7 +1184,7 @@ footer{
 <!-- Footer -->
 <footer>
   <div class="footer-logo"><span>_</span>lee.dev</div>
-  <div class="footer-copy">© 2025 Steve lee · Built with Python & ☕</div>
+  <div class="footer-copy">© 2026 Steve lee · Built with Python & ☕</div>
   <div class="footer-links">
     <a href="https://github.com/Adeyanju-Adeola24" target="_blank" title="GitHub">⌥</a>
     <a href="mailto:yemiadeyanju20@gmail.com" title="Email">✉</a>
@@ -1278,6 +1268,34 @@ function type(){
   }
 }
 setTimeout(type, 1200);
+
+// Terminal typing animation
+const termLines = [
+  '<span class="panel-cm"># Developer profile loaded</span>',
+  '&nbsp;',
+  '{',
+  '&nbsp;&nbsp;<span class="panel-json">"name"</span>: <span class="panel-str">"Steve lee"</span>,',
+  '&nbsp;&nbsp;<span class="panel-json">"role"</span>: <span class="panel-str">"Python Developer"</span>,',
+  '&nbsp;&nbsp;<span class="panel-json">"location"</span>: <span class="panel-str">"Nigeria"</span>,',
+  '&nbsp;&nbsp;<span class="panel-json">"stack"</span>: [<span class="panel-str">"Python"</span>, <span class="panel-str">"Automation"</span>, <span class="panel-str">"OSINT"</span>],',
+  '&nbsp;&nbsp;<span class="panel-json">"available"</span>: <span class="panel-bool">true</span>,',
+  '&nbsp;&nbsp;<span class="panel-json">"remote"</span>: <span class="panel-bool">true</span>',
+  '}',
+  '&nbsp;',
+  '<span class="panel-kw">$</span> <span class="term-cursor" style="color:var(--accent);animation:blink 1s step-end infinite">_</span>'
+];
+(function typeTerm(i){
+  const el = document.getElementById('terminal');
+  if(!el) return;
+  if(i >= termLines.length) return;
+  const line = document.createElement('span');
+  line.className = 'panel-line';
+  line.innerHTML = termLines[i];
+  line.style.opacity = '0';
+  line.style.animation = 'fadeIn .3s forwards';
+  el.insertBefore(line, el.lastElementChild);
+  setTimeout(() => typeTerm(i + 1), i === 0 ? 400 : i === 1 ? 250 : i >= termLines.length - 1 ? 120 : 80);
+})(0);
 
 // Scroll reveal
 const revealed = new Set();
