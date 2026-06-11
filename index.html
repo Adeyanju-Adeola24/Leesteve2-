@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Adeyanju Yemi — Python Developer, Automation Engineer & Cybersecurity Enthusiast based in Nigeria."/>
-<title>Adeyanju Yemi | Python Developer</title>
+<meta name="description" content="Steve lee — Python Developer, Automation Engineer & Cybersecurity Enthusiast based in Nigeria."/>
+<title>Steve lee | Python Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <style>
@@ -741,8 +741,14 @@ footer {
   footer { flex-direction: column; align-items: flex-start; }
 }
 </style>
+<!-- Scroll Progress CSS -->
+<style>
+#progress-bar{position:fixed;top:0;left:0;width:0;height:2px;z-index:9998;background:linear-gradient(90deg,var(--g0),var(--c0),var(--g0));transition:width .1s linear;box-shadow:0 0 10px var(--g0)}
+</style>
 </head>
 <body>
+<!-- Scroll Progress -->
+<div id="progress-bar"></div>
 
 <!-- Custom Cursor -->
 <div id="cursor-dot"></div>
@@ -756,7 +762,7 @@ footer {
 
 <!-- Loader -->
 <div id="loader">
-  <div class="loader-logo"><span>~/</span>yemi.portfolio</div>
+  <div class="loader-logo"><span>~/</span>steve.portfolio</div>
   <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
   <div class="loader-pct" id="loader-pct">0%</div>
 </div>
@@ -773,7 +779,11 @@ footer {
 <!-- NAV -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <span class="blink">_</span>yemi.dev
+    <span class="blink">_</span>steve.dev
+    <span style="display:inline-flex;align-items:center;gap:3px;margin-left:6px;font-size:9px;color:var(--green);letter-spacing:.1em;font-family:var(--mono)">
+      <span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease infinite;display:inline-block"></span>
+      LIVE
+    </span>
   </a>
   <ul class="nav-links">
     <li><a href="#about">about</a></li>
@@ -801,9 +811,9 @@ footer {
         OPEN TO OPPORTUNITIES
       </div>
       <h1 class="hero-name">
-        Adeyanju
-        <span class="line2">
-          <span class="filled">Yemi</span>
+        Steve
+          <span class="line2">
+            <span class="filled">lee</span>
         </span>
       </h1>
       <div class="hero-roles">
@@ -813,6 +823,7 @@ footer {
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View My Work ↓</a>
         <a href="mailto:yemiadeyanju20@gmail.com" class="btn-outline">Let's Talk →</a>
+        <a onclick="alert('Add your resume PDF link here!');return false" href="#" class="btn-outline" style="border-color:var(--g0);color:var(--g0)">📄 Resume</a>
       </div>
     </div>
     <div class="hero-terminal">
@@ -820,16 +831,16 @@ footer {
         <span class="term-dot r"></span>
         <span class="term-dot y"></span>
         <span class="term-dot g"></span>
-        <span class="term-title">yemi@dev ~ python -c "import me"</span>
+        <span class="term-title">steve@dev ~ python -c "import me"</span>
       </div>
       <div class="term-body">
         <span class="t-row"><span class="tb"># Loading developer profile...</span></span>
         <span class="t-row">&nbsp;</span>
-        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span class="tc">import</span><span class="ts"> yemi</span></span>
-        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span class="tc">print</span><span class="ts">(yemi.info())</span></span>
+        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span class="tc">import</span><span class="ts"> lee</span></span>
+        <span class="t-row"><span class="tp">&gt;&gt;&gt; </span><span class="tc">print</span><span class="ts">(lee.info())</span></span>
         <span class="t-row">&nbsp;</span>
         <span class="t-row"><span class="tb">{</span></span>
-        <span class="t-row">&nbsp;&nbsp;<span class="tk">"name"</span>: <span class="tv">"Adeyanju Yemi"</span>,</span>
+        <span class="t-row">&nbsp;&nbsp;<span class="tk">"name"</span>: <span class="tv">"Steve lee"</span>,</span>
         <span class="t-row">&nbsp;&nbsp;<span class="tk">"role"</span>: <span class="tv">"Python Developer"</span>,</span>
         <span class="t-row">&nbsp;&nbsp;<span class="tk">"location"</span>: <span class="tv">"Nigeria 🇳🇬"</span>,</span>
         <span class="t-row">&nbsp;&nbsp;<span class="tk">"stack"</span>: [<span class="tv">"Python"</span>, <span class="tv">"Bots"</span>, <span class="tv">"OSINT"</span>],</span>
@@ -1007,8 +1018,8 @@ footer {
           <div class="proj-header">
             <span class="proj-num">FEATURED_PROJECT</span>
             <div class="proj-links">
-              <a href="#" class="proj-link" title="GitHub">⌥</a>
-              <a href="#" class="proj-link" title="Live">↗</a>
+              <a href="https://github.com/Adeyanju-Adeola24/cybersec-bot" class="proj-link" title="GitHub" target="_blank">⌥</a>
+              <a href="https://github.com/Adeyanju-Adeola24/ghost-chat" class="proj-link" title="Live" target="_blank">↗</a>
             </div>
           </div>
           <h3 class="proj-title">OSINT Telegram Intelligence Bot</h3>
@@ -1023,7 +1034,7 @@ footer {
           </div>
           <div class="proj-footer">
             <div class="proj-status"><span class="dot"></span> ACTIVE</div>
-            <a href="#" class="proj-arrow">SEE PROJECT →</a>
+            <a href="https://github.com/Adeyanju-Adeola24/cybersec-bot" class="proj-arrow" target="_blank">SEE PROJECT →</a>
           </div>
         </div>
         <div class="proj-preview">
@@ -1044,10 +1055,10 @@ footer {
       <div class="project-card reveal">
         <div class="proj-header">
           <span class="proj-num">PROJECT_02</span>
-          <div class="proj-links"><a href="#" class="proj-link">⌥</a></div>
-        </div>
-        <h3 class="proj-title">Automation Scripts Suite</h3>
-        <p class="proj-desc">A production collection of Python automation scripts: scraping pipelines with pagination + anti-ban logic, file system organizers, scheduled job runners, and bulk data processors. Exports to CSV/JSON/SQLite.</p>
+          <div class="proj-links"><a href="https://github.com/Adeyanju-Adeola24/airdrop-farm" class="proj-link" title="GitHub" target="_blank">⌥</a></div>
+          </div>
+          <h3 class="proj-title">Automation Scripts Suite</h3>
+          <p class="proj-desc">A production collection of Python automation scripts: scraping pipelines with pagination + anti-ban logic, file system organizers, scheduled job runners, and bulk data processors. Exports to CSV/JSON/SQLite.</p>
         <div class="proj-tags">
           <span class="tag tg">Python</span>
           <span class="tag tc2">BeautifulSoup</span>
@@ -1057,16 +1068,16 @@ footer {
         </div>
         <div class="proj-footer">
           <div class="proj-status"><span class="dot"></span> COMPLETE</div>
-          <a href="#" class="proj-arrow">SEE PROJECT →</a>
+          <a href="https://github.com/Adeyanju-Adeola24/airdrop-farm" class="proj-arrow" target="_blank">SEE PROJECT →</a>
         </div>
       </div>
 
       <div class="project-card reveal">
         <div class="proj-header">
           <span class="proj-num">PROJECT_03</span>
-          <div class="proj-links"><a href="#" class="proj-link">⌥</a></div>
-        </div>
-        <h3 class="proj-title">Cybersecurity Toolset CLI</h3>
+          <div class="proj-links"><a href="https://github.com/Adeyanju-Adeola24" class="proj-link" title="GitHub" target="_blank">⌥</a></div>
+          </div>
+          <h3 class="proj-title">Cybersecurity Toolset CLI</h3>
         <p class="proj-desc">A suite of CLI security tools: port scanner, basic brute-force simulator, subdomain enumerator, header analyzer, and a network information aggregator. Designed for ethical testing and security research.</p>
         <div class="proj-tags">
           <span class="tag tp2">Security</span>
@@ -1077,16 +1088,16 @@ footer {
         </div>
         <div class="proj-footer">
           <div class="proj-status"><span class="dot"></span> COMPLETE</div>
-          <a href="#" class="proj-arrow">SEE PROJECT →</a>
+          <a href="https://github.com/Adeyanju-Adeola24" class="proj-arrow" target="_blank">SEE PROJECT →</a>
         </div>
       </div>
 
       <div class="project-card reveal">
         <div class="proj-header">
           <span class="proj-num">PROJECT_04</span>
-          <div class="proj-links"><a href="#" class="proj-link">⌥</a></div>
-        </div>
-        <h3 class="proj-title">Multi-Source Scraping Pipeline</h3>
+          <div class="proj-links"><a href="https://github.com/Adeyanju-Adeola24" class="proj-link" title="GitHub" target="_blank">⌥</a></div>
+          </div>
+          <h3 class="proj-title">Multi-Source Scraping Pipeline</h3>
         <p class="proj-desc">A scalable, concurrent scraping pipeline handling dynamic JavaScript-rendered pages, rotating user agents, and retry logic. Outputs structured data to multiple formats with data validation and deduplication.</p>
         <div class="proj-tags">
           <span class="tag tc2">Scrapy</span>
@@ -1097,7 +1108,7 @@ footer {
         </div>
         <div class="proj-footer">
           <div class="proj-status"><span class="dot"></span> COMPLETE</div>
-          <a href="#" class="proj-arrow">SEE PROJECT →</a>
+          <a href="https://github.com/Adeyanju-Adeola24" class="proj-arrow" target="_blank">SEE PROJECT →</a>
         </div>
       </div>
 
@@ -1219,18 +1230,18 @@ footer {
         <span class="term-dot r"></span>
         <span class="term-dot y"></span>
         <span class="term-dot g"></span>
-        <span class="t-header-title">yemi@portfolio:~$ — type 'help' to start</span>
+        <span class="t-header-title">lee@portfolio:~$ — type 'help' to start</span>
       </div>
       <div class="t-content" id="t-output">
-        <span style="display:block;color:var(--g0)">Welcome to Yemi's interactive profile terminal.</span>
+        <span style="display:block;color:var(--g0)">Welcome to lee's interactive profile terminal.</span>
         <span style="display:block;color:var(--txt-dim)">Type <span style="color:var(--c0)">help</span> to see available commands.</span>
         <span style="display:block">&nbsp;</span>
       </div>
       <div class="t-input-row">
-        <span class="t-prompt-lbl">yemi@portfolio:~$&nbsp;</span>
+        <span class="t-prompt-lbl">lee@portfolio:~$&nbsp;</span>
         <input type="text" id="terminal-input" placeholder="type a command..." autocomplete="off" spellcheck="false"/>
       </div>
-      <div class="t-hint">try: help · about · skills · projects · contact · clear</div>
+      <div class="t-hint">try: help · about · skills · projects · contact · whoami · sudo · matrix · hack · coffee · clear</div>
     </div>
   </div>
 </section>
@@ -1249,6 +1260,13 @@ footer {
       <div class="reveal-left">
         <p class="contact-intro">Have a project in mind? Need a bot, automation script, or OSINT tool built? I'm available for freelance work, remote contracts, and long-term collaborations. Let's talk.</p>
         <div class="contact-items">
+          <a href="https://github.com/Adeyanju-Adeola24" class="c-item" target="_blank">
+            <span class="c-ico">⌥</span>
+            <div class="c-detail">
+              <span class="c-lbl">GITHUB</span>
+              <span class="c-val">@Adeyanju-Adeola24</span>
+            </div>
+          </a>
           <a href="mailto:yemiadeyanju20@gmail.com" class="c-item">
             <span class="c-ico">✉️</span>
             <div class="c-detail">
@@ -1312,8 +1330,8 @@ footer {
 </div><!-- /wrap -->
 
 <footer>
-  <div class="footer-logo">_yemi.dev</div>
-  <div class="footer-copy">© 2025 Adeyanju Yemi · Built with Python passion 🐍</div>
+  <div class="footer-logo">_lee.dev</div>
+  <div class="footer-copy">© 2025 Steve lee · Built with Python passion 🐍</div>
   <a href="#hero" class="back-top">BACK TO TOP ↑</a>
 </footer>
 
@@ -1352,6 +1370,36 @@ document.querySelectorAll('a, button, .project-card, .stat-card, .skill-cat, .se
   el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
 });
 
+/* ── CURSOR TRAIL PARTICLES ── */
+(function(){
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9997';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+  document.addEventListener('mousemove', e => {
+    particles.push({ x: e.clientX, y: e.clientY, life: 1 });
+    if (particles.length > 30) particles.shift();
+  });
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+      p.life -= 0.025;
+      p.y -= 0.3;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.life * 4, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,255,136,${p.life * 0.4})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+})();
+
 /* ── MATRIX CANVAS ── */
 (function(){
   const c = document.getElementById('matrix-canvas');
@@ -1385,9 +1433,14 @@ document.querySelectorAll('a, button, .project-card, .stat-card, .skill-cat, .se
 
 /* ── NAV SCROLL ── */
 const navbar = document.getElementById('navbar');
+const progressBar = document.getElementById('progress-bar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 40);
   updateActiveNav();
+  // Progress bar
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = docHeight > 0 ? (scrollTop / docHeight) * 100 + '%' : '0';
 });
 
 /* ── ACTIVE NAV ── */
@@ -1428,9 +1481,11 @@ function type() {
 setTimeout(type, 1800);
 
 /* ── SCROLL REVEAL ── */
+const revealed = new Set();
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
+    if (e.isIntersecting && !revealed.has(e.target)) {
+      revealed.add(e.target);
       e.target.classList.add('visible');
       // Skill bars
       if (e.target.id === 'skill-bars' || e.target.closest('#skill-bars')) animateBars();
@@ -1462,6 +1517,15 @@ function animCount(el) {
   }, 35);
 }
 
+/* ── LIVE TERMINAL CLOCK ── */
+(function(){
+  const h = document.querySelector('.t-header-title');
+  if(h) setInterval(() => {
+    const d = new Date();
+    h.textContent = `lee@portfolio:~$ — ` + d.toLocaleTimeString('en-US',{hour12:false});
+  }, 1000);
+})();
+
 /* ── CARD 3D TILT ── */
 document.querySelectorAll('.project-card').forEach(card => {
   card.addEventListener('mousemove', e => {
@@ -1477,16 +1541,19 @@ document.querySelectorAll('.project-card').forEach(card => {
 const commands = {
   help: () => [
     '<span style="color:var(--c0)">Available commands:</span>',
-    '  <span style="color:var(--g0)">about</span>     — Who is Yemi?',
+    '  <span style="color:var(--g0)">about</span>     — Who is lee?',
     '  <span style="color:var(--g0)">skills</span>    — Technical skills list',
     '  <span style="color:var(--g0)">projects</span>  — View projects',
     '  <span style="color:var(--g0)">contact</span>   — Contact information',
-    '  <span style="color:var(--g0)">hire</span>      — How to hire me',
     '  <span style="color:var(--g0)">whoami</span>    — Quick identity check',
+    '  <span style="color:var(--g0)">sudo</span>      — Try it 😏',
+    '  <span style="color:var(--g0)">matrix</span>    — Elevate the matrix',
+    '  <span style="color:var(--g0)">hack</span>      — Feel like a hacker',
+    '  <span style="color:var(--g0)">coffee</span>    — ☕',
     '  <span style="color:var(--g0)">clear</span>     — Clear terminal',
   ],
   about: () => [
-    '<span style="color:var(--g0)">Adeyanju Yemi</span> — Python Developer & Automation Engineer',
+    '<span style="color:var(--g0)">Steve lee</span> — Python Developer & Automation Engineer',
     '📍 Location   : Nigeria',
     '💼 Focus      : Automation, Bots, OSINT, Cybersecurity',
     '📚 Learning   : Self-taught since 2022',
@@ -1520,7 +1587,7 @@ const commands = {
     '  ⏰ Response: Usually within 24 hours',
   ],
   hire: () => [
-    '<span style="color:var(--g0)">How to hire Yemi:</span>',
+    '<span style="color:var(--g0)">How to hire lee:</span>',
     '  1. Send an email to yemiadeyanju20@gmail.com',
     '  2. Describe your project / role',
     '  3. I\'ll respond within 24 hours',
@@ -1528,8 +1595,30 @@ const commands = {
     '  5. 🚀 Let\'s build something great!',
   ],
   whoami: () => [
-    '<span style="color:var(--g0)">yemi</span> — Python Developer from Nigeria 🇳🇬',
-    'uid=1337(yemi) groups=developers,builders,hackers',
+    '<span style="color:var(--g0)">lee</span> — Python Developer from Nigeria 🇳🇬',
+    'uid=1337(lee) groups=developers,builders,hackers',
+  ],
+  sudo: () => [
+    '<span style="color:var(--r0)">[sudo] password for lee:</span>',
+    '<span style="color:var(--g0)">Nice try. You are already root in this terminal. 🤝</span>',
+  ],
+  matrix: () => {
+    document.querySelector('#matrix-canvas').style.opacity = '.25';
+    return ['<span style="color:var(--g0)">Matrix intensity increased. Welcome to the real world.</span>'];
+  },
+  hack: () => [
+    '<span style="color:var(--r0)">Initializing hack sequence...</span>',
+    '<span style="color:var(--c0)">  └─ Scanning ports............................ DONE</span>',
+    '<span style="color:var(--c0)">  └─ Bypassing firewall....................... DONE</span>',
+    '<span style="color:var(--c0)">  └─ Injecting payload........................ DONE</span>',
+    '<span style="color:var(--g0)">✅ Access granted. (This is just for show. 😄)</span>',
+  ],
+  coffee: () => [
+    '<span style="color:var(--amber)">☕ Brewing your coffee...</span>',
+    '<span style="color:var(--g0)">Coffee ready! Type "ls" to see what\'s next.</span>',
+  ],
+  ls: () => [
+    '<span style="color:var(--c0)">.</span>  <span style="color:var(--c0)">..</span>  <span style="color:var(--g0)">about</span>  <span style="color:var(--g0)">skills</span>  <span style="color:var(--g0)">projects</span>  <span style="color:var(--g0)">contact</span>  <span style="color:var(--amber)">coffee</span>',
   ],
   clear: () => null,
 };
@@ -1545,7 +1634,7 @@ input.addEventListener('keydown', e => {
 
   const echo = document.createElement('span');
   echo.style.display = 'block';
-  echo.innerHTML = `<span style="color:var(--g0)">yemi@portfolio:~$</span> <span style="color:#fff">${cmd}</span>`;
+  echo.innerHTML = `<span style="color:var(--g0)">lee@portfolio:~$</span> <span style="color:#fff">${cmd}</span>`;
   output.appendChild(echo);
 
   if (cmd === 'clear') {
@@ -1555,14 +1644,17 @@ input.addEventListener('keydown', e => {
 
   const fn = commands[cmd];
   if (fn) {
-    fn().forEach(line => {
-      const el = document.createElement('span');
-      el.style.display = 'block';
-      el.style.color = 'var(--txt-dim)';
-      el.style.paddingLeft = '.5rem';
-      el.innerHTML = line;
-      output.appendChild(el);
-    });
+    const lines = fn();
+    if (lines) {
+      lines.forEach(line => {
+        const el = document.createElement('span');
+        el.style.display = 'block';
+        el.style.color = 'var(--txt-dim)';
+        el.style.paddingLeft = '.5rem';
+        el.innerHTML = line;
+        output.appendChild(el);
+      });
+    }
   } else {
     const err = document.createElement('span');
     err.style.display = 'block';
@@ -1582,12 +1674,24 @@ function handleForm(e) {
   e.preventDefault();
   const btn = document.getElementById('submit-text');
   const msg = document.getElementById('form-msg');
+  const form = e.target;
+  const data = new FormData(form);
   btn.textContent = 'SENDING...';
-  setTimeout(() => {
-    btn.textContent = '✓ SENT!';
-    msg.textContent = '✓ Message delivered. Yemi will reply within 24 hours.';
-    setTimeout(() => { btn.textContent = 'SEND MESSAGE →'; msg.textContent = ''; }, 4000);
-  }, 1500);
+  fetch('https://formspree.io/f/xjkyqyqg', {
+    method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+  }).then(r => {
+    if (r.ok) {
+      btn.textContent = '✓ SENT!';
+      msg.textContent = '✓ Message delivered. lee will reply within 24 hours.';
+      form.reset();
+    } else {
+      throw new Error('Failed');
+    }
+  }).catch(() => {
+    btn.textContent = 'SEND MESSAGE →';
+    msg.textContent = '✗ Send failed. Email lee directly: yemiadeyanju20@gmail.com';
+  });
+  setTimeout(() => { btn.textContent = 'SEND MESSAGE →'; msg.textContent = ''; }, 4000);
 }
 </script>
 </body>
