@@ -237,6 +237,23 @@ nav.scrolled{background:rgba(7,9,15,.85);backdrop-filter:blur(28px) saturate(1.5
 .panel-line{display:block;opacity:0;animation:fadeIn .4s forwards}
 .panel-kw{color:var(--cyan2)}.panel-str{color:#fbbf24}.panel-fn{color:var(--green2)}.panel-cm{color:var(--muted)}.panel-bool{color:var(--pink)}.panel-json{color:var(--text2)}
 .term-cursor{color:var(--cyan);animation:blink 1s step-end infinite}
+
+/* Back to top */
+#back-top{position:fixed;bottom:28px;right:28px;z-index:50;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--cyan);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);opacity:0;transform:translateY(20px);pointer-events:none;backdrop-filter:blur(12px)}
+#back-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
+#back-top:hover{border-color:var(--cyan);box-shadow:0 0 30px rgba(0,240,255,.2);transform:translateY(-4px)}
+
+/* Toast */
+#toast{position:fixed;bottom:80px;right:28px;z-index:50;font-family:var(--mono);font-size:11px;padding:10px 20px;border-radius:8px;background:var(--surface);border:1px solid var(--green);color:var(--green);backdrop-filter:blur(12px);opacity:0;transform:translateY(20px);transition:all .4s;pointer-events:none}
+#toast.show{opacity:1;transform:translateY(0)}
+
+/* Gradient border animation */
+@keyframes borderGlow{0%,100%{border-color:rgba(0,240,255,.2)}50%{border-color:rgba(255,0,170,.2)}}
+.proj-card.featured{border-color:rgba(0,240,255,.15);animation:borderGlow 3s ease-in-out infinite}
+
+/* Scramble text */
+.scramble-text{cursor:pointer;display:inline-block}
+.scramble-text:hover{text-shadow:0 0 40px rgba(0,240,255,.3)}
 .term-input-line{display:flex;align-items:center;gap:8px;margin-top:4px;padding:2px 0}
 .term-input{background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:13px;flex:1;caret-color:var(--cyan);padding:0;margin:0;min-width:0}
 .term-input:focus{outline:none;border:none;box-shadow:none}
@@ -465,6 +482,8 @@ footer{padding:40px 28px;border-top:1px solid var(--border);display:flex;align-i
 <canvas id="particles-canvas"></canvas>
 
 <div id="progress"></div>
+<div id="back-top">↑</div>
+<div id="toast"></div>
 <div class="cursor-dot"></div>
 <div class="cursor-ring"></div>
 
@@ -510,7 +529,7 @@ footer{padding:40px 28px;border-top:1px solid var(--border);display:flex;align-i
     <div class="hero-grid">
       <div>
         <div class="hero-tagline" style="animation:fadeUp .8s .25s both">// python developer & automation engineer</div>
-        <h1 class="hero-name" style="animation:fadeUp .8s .3s both">Hi, I'm<br/><span class="grad">Steve lee</span></h1>
+        <h1 class="hero-name" style="animation:fadeUp .8s .3s both">Hi, I'm<br/><span class="grad scramble-text" id="scramble-name">Steve lee</span></h1>
         <div class="hero-role" style="animation:fadeUp .8s .4s both"><span id="typewriter"></span><span class="cursor">_</span></div>
         <p class="hero-desc" style="animation:fadeUp .8s .5s both">Python developer from Nigeria specializing in automation, Telegram bots, OSINT tools, and cybersecurity solutions. I turn ideas into deployable, real-world tools.</p>
         <div class="hero-btns" style="animation:fadeUp .8s .6s both">
@@ -886,7 +905,7 @@ footer{padding:40px 28px;border-top:1px solid var(--border);display:flex;align-i
       <div class="reveal-l">
         <p class="contact-intro">Need a bot, automation script, or OSINT tool? I'm available for freelance work, remote contracts, and collaborations worldwide.</p>
         <div class="contact-items">
-          <a href="mailto:yemiadeyanju20@gmail.com" class="c-item">
+          <a href="mailto:yemiadeyanju20@gmail.com" class="c-item" data-copy="yemiadeyanju20@gmail.com">
             <span class="ico">✉️</span>
             <div><span class="lbl">Email</span><span class="val">yemiadeyanju20@gmail.com</span></div>
           </a>
@@ -894,7 +913,7 @@ footer{padding:40px 28px;border-top:1px solid var(--border);display:flex;align-i
             <span class="ico">📞</span>
             <div><span class="lbl">Phone / WhatsApp</span><span class="val">+234 814 157 7447</span></div>
           </a>
-          <a href="https://github.com/Adeyanju-Adeola24" class="c-item" target="_blank">
+          <a href="https://github.com/Adeyanju-Adeola24" class="c-item" target="_blank" data-copy="Adeyanju-Adeola24">
             <span class="ico">⌥</span>
             <div><span class="lbl">GitHub</span><span class="val">@Adeyanju-Adeola24</span></div>
           </a>
@@ -1071,6 +1090,48 @@ document.getElementById('contact-form')?.addEventListener('submit',function(e){
   fetch('https://formspree.io/f/xjkyqyqg',{method:'POST',body:data,headers:{Accept:'application/json'}}).then(r=>{if(r.ok){if(btn)btn.textContent='✓ Sent!';if(msg){msg.textContent='✓ Thanks! I\'ll reply within 24 hours.';msg.style.color='var(--green)'}this.reset()}else throw Error()}).catch(()=>{if(btn)btn.textContent='Send Message →';if(msg){msg.innerHTML='✗ Send failed. Email me directly: yemiadeyanju20@gmail.com';msg.style.color='var(--pink)'}});
   if(btn&&msg)setTimeout(()=>{btn.textContent='Send Message →';msg.textContent=''},5000);
 });
+
+// Back to top
+const bt=document.getElementById('back-top');
+window.addEventListener('scroll',()=>{bt?.classList.toggle('show',window.scrollY>400)});
+bt?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// Scramble text effect
+const scrambleEl=document.getElementById('scramble-name');
+const chars='!@#$%^&*()_+-=[]{}|;:,.<>?/`~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let scrambleInterval;
+scrambleEl?.addEventListener('mouseenter',function(){
+  const original=this.textContent;
+  let runs=0;
+  clearInterval(scrambleInterval);
+  scrambleInterval=setInterval(()=>{
+    let r='';
+    for(let i=0;i<original.length;i++){
+      if(runs>10&&i<runs-10)r+=original[i];
+      else if(Math.random()>.5&&runs<15)r+=chars[Math.floor(Math.random()*chars.length)];
+      else r+=original[i];
+    }
+    this.textContent=r;
+    runs++;
+    if(runs>20){clearInterval(scrambleInterval);this.textContent=original}
+  },50);
+});
+scrambleEl?.addEventListener('mouseleave',function(){clearInterval(scrambleInterval);this.textContent='Steve lee'});
+
+// Copy to clipboard
+document.querySelectorAll('[data-copy]').forEach(el=>{
+  el.addEventListener('click',function(e){
+    const txt=this.dataset.copy;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      e.preventDefault();
+      navigator.clipboard.writeText(txt).then(()=>{
+        const t=document.getElementById('toast');
+        if(t){t.textContent='✓ Copied: '+txt;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+      }).catch(()=>{window.open(this.href,'_blank')});
+    }
+  });
+});
+
 </script>
 </body>
 </html>
