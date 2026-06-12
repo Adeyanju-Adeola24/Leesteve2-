@@ -64,7 +64,7 @@ img{max-width:100%;display:block}
    NOISE TEXTURE OVERLAY
 ═══════════════════════════════════════ */
 #noise{
-  position:fixed;inset:0;z-index:9999;
+  position:fixed;inset:0;z-index:1;
   pointer-events:none;opacity:.025;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat:repeat;
@@ -441,7 +441,10 @@ nav.scrolled{
 .panel-cm{color:var(--muted)}
 .panel-bool{color:var(--pink)}
 .panel-json{color:var(--text2)}
-.term-cursor{color:var(--cyan);animation:blink 1s step-end infinite}
+.term-cursor{color:var(--cyan);animation:blink 1s step-end infinite;font-size:13px}
+.term-input-line{display:flex;align-items:center;gap:8px;margin-top:4px}
+.term-input{background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:13px;flex:1;caret-color:var(--cyan);padding:0}
+.term-input:focus{outline:none;border:none;box-shadow:none}
 
 /* ═══════════════════════════════════════
    ABOUT
@@ -954,7 +957,14 @@ footer{
             <span class="panel-dot g"></span>
             <span class="panel-title">steve@dev:~$ ./profile.sh</span>
           </div>
-          <div class="panel-body" id="terminal"><span class="panel-line"><span class="term-cursor">_</span></span></div>
+          <div class="panel-body" id="terminal">
+            <div id="term-output"></div>
+            <div class="term-input-line" id="term-input-line" style="display:none">
+              <span class="panel-kw">$</span>
+              <input type="text" id="term-input" class="term-input" autocomplete="off" spellcheck="false" readonly />
+              <span class="term-cursor" id="term-cursor">_</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1424,7 +1434,12 @@ function type(){
 }
 setTimeout(type, 1200);
 
-// Terminal typing animation
+// Terminal typing animation + interactive commands
+const termOutput = document.getElementById('term-output');
+const termInput = document.getElementById('term-input');
+const termInputLine = document.getElementById('term-input-line');
+const termCursor = document.getElementById('term-cursor');
+
 const termLines = [
   '<span class="panel-cm"># Developer profile loaded</span>',
   '&nbsp;',
@@ -1436,19 +1451,75 @@ const termLines = [
   '&nbsp;&nbsp;<span class="panel-json">"available"</span>: <span class="panel-bool">true</span>,',
   '&nbsp;&nbsp;<span class="panel-json">"remote"</span>: <span class="panel-bool">true</span>',
   '}',
-  '&nbsp;',
-  '<span class="panel-kw">$</span> <span class="term-cursor">_</span>'
+  '&nbsp;'
 ];
+
+function termAdd(html){
+  const line = document.createElement('span');
+  line.className = 'panel-line';
+  line.innerHTML = html;
+  termOutput.appendChild(line);
+}
+
+const termCmds = {
+  help: 'Available commands:<br>&nbsp;&nbsp;<span class="panel-kw">about</span> &mdash; About me<br>&nbsp;&nbsp;<span class="panel-kw">skills</span> &mdash; My skills<br>&nbsp;&nbsp;<span class="panel-kw">projects</span> &mdash; My projects<br>&nbsp;&nbsp;<span class="panel-kw">contact</span> &mdash; Contact info<br>&nbsp;&nbsp;<span class="panel-kw">whoami</span> &mdash; Who I am<br>&nbsp;&nbsp;<span class="panel-kw">github</span> &mdash; GitHub link<br>&nbsp;&nbsp;<span class="panel-kw">clear</span> &mdash; Clear terminal',
+  about: "Self-taught Python developer from Nigeria. I build automation tools, Telegram bots, OSINT systems, and cybersecurity tools. Open to remote work worldwide.",
+  skills: '<span class="panel-json">Python</span>, <span class="panel-json">Automation</span>, <span class="panel-json">Scraping</span>, <span class="panel-json">Telegram Bots</span>, <span class="panel-json">OSINT</span>, <span class="panel-json">Cybersecurity</span>, <span class="panel-json">Linux</span>, <span class="panel-json">Git</span>',
+  projects: 'Check out my work: <a href="#projects" style="color:var(--cyan)">scroll to projects</a> or visit <a href="https://github.com/Adeyanju-Adeola24" style="color:var(--cyan)" target="_blank">github.com/Adeyanju-Adeola24</a>',
+  contact: '<span class="panel-json">Email</span>: yemiadeyanju20@gmail.com<br><span class="panel-json">GitHub</span>: @Adeyanju-Adeola24<br><span class="panel-json">Location</span>: Nigeria (Remote)',
+  whoami: '<span class="panel-str">"Steve lee — Python Developer & Automation Engineer"</span>',
+  github: '<a href="https://github.com/Adeyanju-Adeola24" style="color:var(--cyan)" target="_blank">github.com/Adeyanju-Adeola24</a>',
+  ls: '<span class="panel-json">about/</span>&nbsp;&nbsp;<span class="panel-json">skills/</span>&nbsp;&nbsp;<span class="panel-json">projects/</span>&nbsp;&nbsp;<span class="panel-json">services/</span>&nbsp;&nbsp;<span class="panel-json">contact/</span>'
+};
+
+function termExec(cmd){
+  cmd = cmd.trim().toLowerCase();
+  termAdd('<span class="panel-kw">$</span> ' + cmd);
+  if(cmd === 'clear'){ termOutput.innerHTML = ''; return; }
+  if(cmd === '' || cmd === ' '){ termAdd('<span class="panel-cm">Type <span class="panel-kw">help</span> for available commands</span>'); return; }
+  if(termCmds[cmd]){
+    termAdd(termCmds[cmd]);
+  } else {
+    termAdd('<span class="panel-cm">Command not found: ' + cmd + '. Type <span class="panel-kw">help</span> for available commands</span>');
+  }
+}
+
 (function typeTerm(i){
-  const el = document.getElementById('terminal');
-  if(!el) return;
-  if(i >= termLines.length) return;
+  if(i >= termLines.length){
+    // Show prompt
+    termInputLine.style.display = 'flex';
+    termInput.removeAttribute('readonly');
+    // Enable terminal interaction
+    const panel = document.querySelector('.hero-panel');
+    if(panel){
+      panel.style.cursor = 'text';
+      panel.addEventListener('click', () => termInput.focus());
+    }
+    termInput.focus();
+    return;
+  }
   const line = document.createElement('span');
   line.className = 'panel-line';
   line.innerHTML = termLines[i];
-  el.insertBefore(line, el.lastElementChild);
-  setTimeout(() => typeTerm(i + 1), i === 0 ? 400 : i === 1 ? 250 : i >= termLines.length - 1 ? 120 : 80);
+  termOutput.appendChild(line);
+  setTimeout(() => typeTerm(i + 1), i === 0 ? 400 : i === 1 ? 250 : 80);
 })(0);
+
+// Handle input
+termInput.addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){
+    const val = this.value;
+    this.value = '';
+    termExec(val);
+    termOutput.parentElement.scrollTop = termOutput.parentElement.scrollHeight;
+    setTimeout(() => termInput.focus(), 10);
+  }
+});
+
+// Prevent losing focus
+document.addEventListener('click', function(e){
+  if(e.target.closest('.hero-panel') && termInput) termInput.focus();
+});
 
 // Scroll reveal
 const revealed = new Set();
